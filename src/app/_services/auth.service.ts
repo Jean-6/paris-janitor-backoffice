@@ -33,5 +33,35 @@ export class AuthService {
   }
 
 
+  login(email: string, password: string ): Observable<{authResponse: AuthResponse}> {
+    return this._httpClient.post<{authResponse : AuthResponse}>(`${this.apiUrl}`,{ email, password },{ withCredentials: true });
+  }
+
+  register(firstname: string,lastname: string,email: string,password: string){
+    return this._httpClient.post<{authResponse : AuthResponse}>(`${this.apiUrlRegister}`,
+      {firstname,lastname,email,password},
+      { withCredentials: true });
+  }
+
+  refreshToken(): Observable<any>{
+    return  this._httpClient.post<any>(`${this.apiUrlRefreshToken}`, {} , {withCredentials: true})
+      .pipe(
+        tap(res => {
+          console.log('Tokens refreshed successfully');
+        })
+      );
+  }
+
+  logout(): Observable<any>{
+    return this._httpClient.post<any>(`${this.apiUrlLogout}` , {} ,{withCredentials: true})
+      .pipe(
+        tap(() => {
+          //localStorage.removeItem("")
+          this._currentUser.next(null);
+          this.router.navigate(['/login'])
+        })
+      )
+  }
+
 }
 
