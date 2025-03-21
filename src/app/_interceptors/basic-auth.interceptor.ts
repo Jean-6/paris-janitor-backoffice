@@ -5,13 +5,15 @@ import {
   HttpEvent,
   HttpInterceptor, HttpErrorResponse
 } from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {catchError, Observable, switchMap, throwError} from 'rxjs';
 import {Router} from "@angular/router";
+import {AuthService} from "../_services/auth.service";
 
 @Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
 
   private router = inject(Router);
+  private authService = inject(AuthService);
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -28,6 +30,18 @@ export class BasicAuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if(error.status == 401 || error.status == 403){
           this.router.navigate(['/login']);
+          /*Revoke token*/
+          return this.authService.refreshToken().pipe(
+            switchMap(token => {
+              return next.handle(token);
+
+            }),
+            catchError((refreshError)=>{
+              this.authService.logout();
+              return throwError(() => refreshError);
+            })
+          )
+          /**/
         }
         return throwError(error);
 
