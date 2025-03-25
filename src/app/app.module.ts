@@ -9,12 +9,15 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    DashboardComponent
+    DashboardComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
