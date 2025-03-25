@@ -5,6 +5,7 @@ import {DashboardComponent} from "./features/dashboard/dashboard.component";
 import {SignupComponent} from "./signup/signup.component";
 import {AuthGuard} from "./_guards/auth.guard";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path : 'forgot-password',
     component:ForgotPasswordComponent
+  },
+  {
+    path : 'reset-password',
+    component:ResetPasswordComponent
   },
   {
     path : 'dashboard',
