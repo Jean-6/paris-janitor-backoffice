@@ -18,6 +18,7 @@ export class AuthService {
   private apiUrlLogout ="http://localhost:9090/api/auth/logout";
   private apiUrlRefreshToken ="http://localhost:9090/api/auth/refresh-token";
 
+
   private _currentUser = new BehaviorSubject<User | null>(null); //To stock user connected state
   currentUser = this._currentUser.asObservable();
   private isAuthenticated = new BehaviorSubject<boolean>(false);
@@ -42,6 +43,7 @@ export class AuthService {
       {firstname,lastname,email,password},
       { withCredentials: true });
   }
+
 
   refreshToken(): Observable<any>{
     return  this._httpClient.post<any>(`${this.apiUrlRefreshToken}`, {} , {withCredentials: true})
