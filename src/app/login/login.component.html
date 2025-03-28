@@ -1,25 +1,38 @@
+<!--<div class="d-flex justify-content-center align-items-center vh-100 ">-->
+<div class="d-flex justify-content-center custom-margin vh-100 ">
 
-<div>
+  <div class="d-flex flex-column">
 
-  <form [formGroup]="myForm">
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email">
+    <div class="card border-0">
+      <div class="card-body">
+        <h3 class="card-title">Authentification</h3>
+
+      <form [formGroup]="myForm">
+        <div class="form-floating">
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="parisjanitor@example.fr">
+          <label for="email">Adresse email</label>
+
+        </div>
+        <div class="form-floating mt-2">
+          <input type="password" class="form-control" id="password" formControlName="password" placeholder="***********">
+          <label for="password">Mot de passe</label>
+        </div>
+        <div class=" action-buttons form-group mt-2">
+          <button class="btn btn-primary" type="button" (click)="onSubmit()">Se connecter</button>
+        </div>
+      </form>
     </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" formControlName="password">
     </div>
 
 
-    <div>
-      <button type="button" (click)="onSubmit()">Submit</button>
+
+    <div class=" d-flex">
+      <div class=""><a class="link text-decoration-none" href="/forgot-password">Mot de passe oublié</a></div>
+      <div class="mx-3"><a class="link text-decoration-none" href="/signup">Ouvrir un compte</a></div>
     </div>
 
-  </form>
+  </div>
+
 </div>
 
-<div class="d-flex ">
-  <div class=""><a class="link text-decoration-none" href="/forgot-password">Mot de passe oublié</a></div>
-  <div class="mx-3"><a class="link text-decoration-none" href="/signup">Ouvrir un compte</a></div>
-</div>
+
