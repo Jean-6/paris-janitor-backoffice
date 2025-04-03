@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 
@@ -7,7 +7,7 @@ import {HttpClient} from "@angular/common/http";
   templateUrl: './property.component.html',
   styleUrls: ['./property.component.css']
 })
-export class PropertyComponent implements OnInit{
+export class PropertyComponent implements OnInit,OnDestroy{
 
   myForm!: FormGroup;
 
@@ -24,12 +24,17 @@ export class PropertyComponent implements OnInit{
       city:[],
       zip:[],
       areaMin:[],
-      areaMax:[]
+      areaMax:[],
+      arrival:[],
+      departure:[]
     })
   }
 
   onSubmit(){
 
+  }
+
+  ngOnDestroy(): void {
   }
 
 }

@@ -22,5 +22,11 @@
   overflow: hidden;/* Evite que le texte depasse */
   text-overflow: ellipsis; /* Ajoute des ... si le texte est trop long */
   white-space: nowrap; /* Empeche les retours à la ligne */
+}
 
+/*p-calendar*/
+
+.p-calendar {
+  height: 37px !important;  /* Hauteur uniforme */
+  display: flex;
 }
