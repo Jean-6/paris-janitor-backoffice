@@ -1,0 +1,170 @@
+
+<div class="d-flex">
+  <div>
+    <app-aside-menu></app-aside-menu>
+  </div>
+
+
+  <div id="content">
+
+    <div class="row mb-1">
+      <div class="">
+        <div class="card rounded-0">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">Tableau de bord</h5>
+            <button type="button" class="btn btn-sm btn-link">Déconnexion</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-1">
+      <div class="">
+        <div class="card rounded-0 border-0">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">Formulaire de recherche </h5>
+          </div>
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit()" >
+
+            <div class="d-flex form-group gap-4">
+              <div class="form-group">
+                <label for="type">Type de bien</label>
+                <select class="form-select form-select" id="type" formControlName="type" >
+                  <option>Selectionner le type de bien</option>
+                  <option>Maison</option>
+                  <option>Appartement</option>
+                  <option>Loft</option>
+                  <option>Villa</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="city">Ville</label>
+                <input type="text" class="form-control form-control" id="city" formControlName="city"  maxlength="5"/>
+              </div>
+              <div class="form-group">
+                <label for="zip">Code postal</label>
+                <input type="text" class="form-control form-control" id="zip" formControlName="zip"  maxlength="5"/>
+              </div>
+
+              <div class="form-group">
+                <label for="budgetMin">Budget Min.</label>
+                <input type="text" class="form-control form-control" id="budgetMin" formControlName="budgetMin" placeholder="" maxlength="5"/>
+                <div *ngIf="myForm.get('budgetMin')?.invalid">
+                  Please provide a expiration
+                  Please provide a expiration
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="budgetMax">Budget Max.</label>
+                <input type="text" class="form-control form-control" id="budgetMax" formControlName="budgetMax" placeholder="" maxlength="5"/>
+                <div *ngIf="myForm.get('budgetMax')?.invalid">
+                  Please provide a code
+                </div>
+              </div>
+
+            </div>
+
+            <div class="d-flex form-group gap-4">
+
+            <div class="form-group">
+              <label for="areaMin">Superficie Min.</label>
+              <input type="text" class="form-control form-control" id="areaMin" formControlName="areaMin"  maxlength="5"/>
+              <div *ngIf="myForm.get('areaMin')?.invalid">
+                Please provide a expiration
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="areaMax">Superficie Max.</label>
+              <input type="text" class="form-control form-control" id="areaMax" formControlName="areaMax"  maxlength="5"/>
+              <div *ngIf="myForm.get('areaMax')?.invalid">
+                Please provide a code
+              </div>
+            </div>
+
+            </div>
+            <div class="form-group">
+              <div class=" action-buttons form-group mt-2">
+                <button class="btn btn-primary " type="button" (click)="onSubmit()">Rechercher</button>
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+    <div class="row d-flex justify-content-start mt-3">
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3" [routerLink]="">
+          <div class="card">
+            <img src="https://picsum.photos/300/150?random=1" class="card-img-top" alt="..." >
+            <div class="card-body">
+              <h5 class="card-title">Estate </h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin.</p>
+             <!-- <a class="btn btn-primary">En savoir plus</a>-->
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+          <div class="card">
+            <img src="https://picsum.photos/300/150?random=1" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Estate </h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin.</p>
+              <!-- <a class="btn btn-primary">En savoir plus</a>-->
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+          <div class="card">
+            <img src="https://picsum.photos/300/150?random=1" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Estate </h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin.</p>
+              <!-- <a class="btn btn-primary">En savoir plus</a>-->
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+          <div class="card">
+            <img src="https://picsum.photos/300/150?random=1" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Project 1</h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin.</p>
+              <!-- <a class="btn btn-primary">En savoir plus</a>-->
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+          <div class="card">
+            <img src="https://picsum.photos/300/150?random=1" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Estate </h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin.</p>
+              <!-- <a class="btn btn-primary">En savoir plus</a>-->
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+          <div class="card">
+            <img src="https://picsum.photos/300/150?random=1" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Estate </h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin.</p>
+              <!-- <a class="btn btn-primary">En savoir plus</a>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

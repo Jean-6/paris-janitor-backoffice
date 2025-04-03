@@ -1,0 +1,26 @@
+
+.card{
+  height: 100%; /*Assure que toutes les cartes ont la même taille*/
+  display: flex;
+  flex-direction: column;
+}
+
+
+.card-img-top{
+  height: 150px; /*Hauteur fixe pour les images*/
+  object-fit: cover; /*Evite la déformation des images*/
+}
+
+.card-body{
+  flex-grow: 1; /*Permet au contenu des s'etirer pour remplir la carte*/
+  display: flex;
+  flex-direction: column;
+}
+
+.card-text{
+  flex-grow: 1; /*Equilibre l'espace entre le texte et le bouton*/
+  overflow: hidden;/* Evite que le texte depasse */
+  text-overflow: ellipsis; /* Ajoute des ... si le texte est trop long */
+  white-space: nowrap; /* Empeche les retours à la ligne */
+
+}
