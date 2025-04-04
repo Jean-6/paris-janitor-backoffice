@@ -2,8 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../_services/auth.service";
-import {AuthResponse} from "../_dto/authResponse";
+import {LoginResponseDto} from "../_dto/loginResponseDto";
 import {catchError, Subject, takeUntil} from "rxjs";
+import {AlertService} from "../_services/alert.service";
+import {LoginRequestDto} from "../_dto/loginRequestDto";
 
 @Component({
   selector: 'app-login',
@@ -12,13 +14,15 @@ import {catchError, Subject, takeUntil} from "rxjs";
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  authResponse: AuthResponse | null = null;
-  isLoading: boolean = false;
+  authResponse: LoginResponseDto | null = null;
   myForm!: FormGroup;
   private destroy$: Subject<void> = new Subject<void>();
 
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+              protected authService: AuthService,
+              private router: Router,
+              private alertService: AlertService) {
 
   }
 
@@ -34,12 +38,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.authService.isLoading = true;
-    this.authService.login(this.myForm.value.email,this.myForm.value.password).pipe(
+    const loginRequest: LoginRequestDto = this.myForm.value;
+
+    this.authService.login(loginRequest).pipe(
       catchError((error)=>{
-        console.error(`Erreur de connexion`,error);
+        this.alertService.error('Une erreur est survenue');
+        console.error(`Erreur de connexion: `,error);
         throw error;
       }),
-      takeUntil(this.destroy$) // Nettoyage automatique si la composante est détruite
+      takeUntil(this.destroy$) // Cancel observable during destroying component
     ).subscribe({
       next: (res:any) => {
         this.authResponse = res;
@@ -47,8 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['/dashboard']);
       },
       error: (err:any) => {
-        console.error(`Erreur de connexion`, err);
-        throw err;
+        console.error(`Erreur de connexion: `, err);
       },
       complete: () => {
         this.authService.isLoading=false;
