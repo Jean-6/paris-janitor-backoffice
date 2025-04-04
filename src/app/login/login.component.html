@@ -7,18 +7,17 @@
       <div class="card-body">
         <h3 class="card-title">Authentification</h3>
 
-      <form [formGroup]="myForm">
-        <div class="form-floating">
-          <input type="email" class="form-control" id="email" formControlName="email" placeholder="parisjanitor@example.fr">
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
           <label for="email">Adresse email</label>
-
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="parisjanitor@example.fr">
         </div>
-        <div class="form-floating mt-2">
-          <input type="password" class="form-control" id="password" formControlName="password" placeholder="***********">
+        <div class="form-group">
           <label for="password">Mot de passe</label>
+          <input type="password" class="form-control" id="password" formControlName="password" placeholder="***********">
         </div>
         <div class=" action-buttons form-group mt-2">
-          <button class="btn btn-primary" type="button" (click)="onSubmit()">Se connecter</button>
+          <button class="btn btn-primary" type="submit" [disabled]="myForm.invalid" >Se connecter</button>
         </div>
       </form>
     </div>
@@ -34,5 +33,7 @@
   </div>
 
 </div>
+
+
 
 

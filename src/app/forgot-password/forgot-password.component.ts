@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PasswordHandlerService} from "../_services/password-handler.service";
 
 @Component({
@@ -9,16 +9,17 @@ import {PasswordHandlerService} from "../_services/password-handler.service";
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  myForm: FormGroup;
+  myForm!: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private passwordHandler: PasswordHandlerService) {
-    this.myForm = this.formBuilder.group({
-      email: [""],
-    });
+
   }
 
   ngOnInit(): void {
+    this.myForm = this.formBuilder.group({
+      email: ["", Validators.required],
+    });
   }
 
   onSubmit() {

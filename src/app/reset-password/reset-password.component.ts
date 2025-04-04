@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {PasswordHandlerService} from "../_services/password-handler.service";
 
@@ -12,13 +12,10 @@ export class ResetPasswordComponent implements OnInit{
 
   token: string ='';
   newPassword: string = '';
-  myForm: FormGroup;
+  myForm!: FormGroup ;
 
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private passwordHandler: PasswordHandlerService) {
-    this.myForm = this.formBuilder.group({
-      newPassword: [''],
 
-    });
   }
 
   ngOnInit(): void {
@@ -26,6 +23,9 @@ export class ResetPasswordComponent implements OnInit{
       this.token = params['token'];
       console.log("token recupéré: ",this.token);
     })
+    this.myForm = this.formBuilder.group({
+      newPassword: ['',Validators.required],
+    });
   }
 
   onSubmit() {

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthResponse} from "../_dto/authResponse";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../_services/auth.service";
 import {Router} from "@angular/router";
 
@@ -9,24 +9,24 @@ import {Router} from "@angular/router";
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit,OnDestroy{
 
 
   authResponse: AuthResponse | null = null;
-  myForm: FormGroup;
+  myForm!: FormGroup;
 
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
-    this.myForm = this.formBuilder.group({
-      firstname: [''],
-      lastname: [''],
-      email: [''],
-      password: [''],
-      //role: ['']
-    });
   }
 
   ngOnInit() {
+
+    this.myForm = this.formBuilder.group({
+      firstname: ['',Validators.required],
+      lastname: ['',Validators.required],
+      email: ['',Validators.required],
+      password: ['',Validators.required],
+    });
 
   }
 
@@ -46,5 +46,8 @@ export class SignupComponent {
       }
     )
 
+  }
+
+  ngOnDestroy(): void {
   }
 }

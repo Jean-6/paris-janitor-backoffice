@@ -1,46 +1,66 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../_services/auth.service";
 import {AuthResponse} from "../_dto/authResponse";
+import {catchError, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   authResponse: AuthResponse | null = null;
-  myForm: FormGroup;
+  isLoading: boolean = false;
+  myForm!: FormGroup;
+  private destroy$: Subject<void> = new Subject<void>();
 
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
-    this.myForm = this.formBuilder.group({
-      email: [''],
-      password: [''],
-    });
+
   }
 
 
   ngOnInit() {
+    this.myForm = this.formBuilder.group({
+      email: ['',Validators.required],
+      password: ['', Validators.required],
+    });
 
   }
 
 
   onSubmit() {
-    this.authService.login(this.myForm.value.email,this.myForm.value.password).subscribe(
-      (res:any) =>{
+    this.authService.isLoading = true;
+    this.authService.login(this.myForm.value.email,this.myForm.value.password).pipe(
+      catchError((error)=>{
+        console.error(`Erreur de connexion`,error);
+        throw error;
+      }),
+      takeUntil(this.destroy$) // Nettoyage automatique si la composante est détruite
+    ).subscribe({
+      next: (res:any) => {
         this.authResponse = res;
-        console.log(this.authResponse);
         this.authService.setIsAuthenticated(true);
         this.router.navigate(['/dashboard']);
       },
-      (error)=>{
-        console.error(`Erreur de connexion`,error);
+      error: (err:any) => {
+        console.error(`Erreur de connexion`, err);
+        throw err;
+      },
+      complete: () => {
+        this.authService.isLoading=false;
       }
-    )
+      });
 
+  }
+
+  ngOnDestroy(){
+    // Libérer les abonnements
+    this.destroy$.next();
+    this.destroy$.complete()
   }
 
 
