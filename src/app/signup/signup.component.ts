@@ -1,8 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthResponse} from "../_dto/authResponse";
+import {LoginResponseDto} from "../_dto/loginResponseDto";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../_services/auth.service";
 import {Router} from "@angular/router";
+import {catchError, map, Subject, takeUntil, throwError} from "rxjs";
+import {AlertService} from "../_services/alert.service";
+import {RegisterRequestDto} from "../_dto/registerRequestDto";
 
 @Component({
   selector: 'app-signup',
@@ -12,11 +15,15 @@ import {Router} from "@angular/router";
 export class SignupComponent implements OnInit,OnDestroy{
 
 
-  authResponse: AuthResponse | null = null;
+  authResponse: LoginResponseDto | null = null;
+  private destroy$: Subject<void> = new Subject<void>();
   myForm!: FormGroup;
 
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+              private authService: AuthService,
+              private router: Router,
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -32,22 +39,29 @@ export class SignupComponent implements OnInit,OnDestroy{
 
 
   onSubmit() {
-    console.log(this.myForm.value); // or handle the form submission as required
-    console.log('Form submitted! : '+this.myForm.value.firstname + 'Email: ' + this.myForm.value.email + ', Password: ' + this.myForm.value.password);
 
-    this.authService.register(this.myForm.value.firstname, this.myForm.value.lastname, this.myForm.value.email, this.myForm.value.password).subscribe(
-      (res: any) => {
+  const registerRequest: RegisterRequestDto = this.myForm.value;
+    this.authService.register(registerRequest).pipe(
+      map(data => data.authResponse),
+      catchError(error => {
+        this.alertService.error('Une erreur est survenue')
+        return throwError(() => error)
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe({
+      next: (res) => {
         this.authResponse = res;
         console.log(this.authResponse);
         this.router.navigate(['/dashboard']);
-      },
-      (error) => {
-        console.error(`Erreur de connexion`, error);
+      }, error: (err) => {
+        console.error(`Erreur de connexion`, err);
       }
-    )
 
+    });
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

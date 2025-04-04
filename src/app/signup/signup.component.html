@@ -1,7 +1,7 @@
 
 
 
-<div class="d-flex justify-content-center custom-margin vh-100">
+<div class="d-flex justify-content-center custom-margin">
 
 
   <div class="d-flex flex-column">
@@ -12,27 +12,38 @@
 
         <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
 
-          <div class="d-flex">
-          <div class="form-group mx-3">
+          <div class="d-flex gap-2">
+          <div class="form-group ">
             <label for="firstname">Firstname</label>
             <input type="text" class="form-control" id="firstname" formControlName="firstname">
-
+            <span *ngIf="myForm.get('firstname')" class="msg-error">
+              Prenoms invalide
+            </span>
           </div>
           <div class="form-group ">
             <label for="lastname">Lastname</label>
             <input type="text" class="form-control" id="lastname" formControlName="lastname">
+            <span *ngIf="myForm.get('lastname')" class="msg-error">
+              Nom invalide
+            </span>
           </div>
           </div>
 
-          <div class="d-flex mt-2">
-            <div class="form-group mx-3">
+          <div class="d-flex mt-2 gap-2">
+            <div class="form-group">
               <label for="email">Email</label>
               <input type="email" class="form-control" id="email" formControlName="email">
+              <span *ngIf="myForm.get('email')" class="msg-error">
+                Email invalide
+            </span>
 
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" class="form-control" id="password" formControlName="password">
+              <span *ngIf="myForm.get('password')" class="msg-error">
+                Mot de passe invalide
+            </span>
             </div>
           </div>
 
