@@ -8,12 +8,14 @@ import {
 import {catchError, Observable, switchMap, throwError} from 'rxjs';
 import {Router} from "@angular/router";
 import {AuthService} from "../_services/auth.service";
+import {AlertService} from "../_services/alert.service";
 
 @Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
 
   private router = inject(Router);
   private authService = inject(AuthService);
+  private alert = inject(AlertService);
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -22,12 +24,13 @@ export class BasicAuthInterceptor implements HttpInterceptor {
     const password='4b50dcc5-b6c9-49a9-af2c-8d7d8a416e3b';
     // Cloner en Base64
     const authToken = 'Basic ' + btoa(`${username}:${password}`);
-    // Cloner la requete
+    // Clone request
     const authReq = request.clone({
       setHeaders: { Authorization: `Bearer ${authToken}` },
     })
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
+        this.alert.error('Erreur serveur : '+ error.message)
         if(error.status == 401 || error.status == 403){
           this.router.navigate(['/login']);
           /*Revoke token*/
@@ -43,7 +46,7 @@ export class BasicAuthInterceptor implements HttpInterceptor {
           )
           /**/
         }
-        return throwError(error);
+        return throwError(()=> error);
 
       })
     );
