@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
               protected authService: AuthService,
               private router: Router,
-              private alertService: AlertService) {
+              private alert: AlertService) {
 
   }
 
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.authService.login(loginRequest).pipe(
       catchError((error)=>{
-        this.alertService.error('Une erreur est survenue');
+        this.alert.error('Une erreur est survenue');
         console.error(`Erreur de connexion: `,error);
         throw error;
       }),
@@ -56,15 +56,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       error: (err:any) => {
         console.error(`Erreur de connexion: `, err);
       },
-      complete: () => {
-        this.authService.isLoading=false;
-      }
-      });
+      complete: () => this.authService.isLoading=false
+    });
 
   }
 
   ngOnDestroy(){
-    // Libérer les abonnements
+    // Release subscriptions
     this.destroy$.next();
     this.destroy$.complete()
   }
