@@ -1,20 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PasswordHandlerService} from "../_services/password-handler.service";
+import {ResetPasswordRequestDto} from "../_dto/resetPasswordRequestDto";
+import {catchError, Subject, takeUntil} from "rxjs";
+import {AlertService} from "../_services/alert.service";
+
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent implements OnInit{
+export class ResetPasswordComponent implements OnInit,OnDestroy{
 
   token: string ='';
-  newPassword: string = '';
-  myForm!: FormGroup ;
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private passwordHandler: PasswordHandlerService) {
+  myForm!: FormGroup ;
+  private destroy$: Subject<void> = new Subject<void>();
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder,
+              private passwordHandler: PasswordHandlerService,
+              private alert: AlertService) {
 
   }
 
@@ -29,11 +38,31 @@ export class ResetPasswordComponent implements OnInit{
   }
 
   onSubmit() {
-    console.log("token : "+this.token)
-    this.passwordHandler.resetPassword(this.token,this.myForm.value.newPassword).subscribe(
-      (res:any) => alert('Email envoyé !'),
-      error=> console.log(error)
-    )
+    const resetPasswordRequest= new ResetPasswordRequestDto(this.token, this.myForm.value);
+    this.passwordHandler.resetPassword(resetPasswordRequest)
+      .pipe(
+        catchError((err)=>{
+          this.alert.error("Une erreur est survenue")
+          console.error('Erreur de connexion: ',err)
+          throw err;
+        }),
+        takeUntil(this.destroy$)
+      ).subscribe({
+        next: (res:any)=>{
+          this.alert.success(res.toString())
+          this.router.navigate(['/login'])
+        },
+        error: (err:any)=>{
+          console.error('Erreur de connexion');
+        },
+        complete: ()=> console.log('Requête terminée'),
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }
