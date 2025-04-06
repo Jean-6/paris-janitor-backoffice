@@ -1,0 +1,10 @@
+<div class="row mb-1">
+  <div class="">
+    <div class="card rounded-0">
+      <div class="d-flex justify-content-between">
+        <h5 class="card-title">Tableau de bord</h5>
+        <button *ngIf="authService.isLoggIn()" type="button" class="btn btn-sm btn-link" (click)="onLogout()">Déconnexion</button>
+      </div>
+    </div>
+  </div>
+</div>
