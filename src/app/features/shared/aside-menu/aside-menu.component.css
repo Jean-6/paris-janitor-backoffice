@@ -2,7 +2,7 @@
     DEMO STYLE
 */
 
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+/*@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";*/
 body {
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
@@ -62,7 +62,7 @@ a:focus {
   background: #7386D5;
   color: #fff;
   transition: all 0.3s;
-  padding-bottom: 50%;
+  padding-bottom: 90%;
 }
 
 #sidebar.active {
