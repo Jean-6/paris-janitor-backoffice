@@ -6,18 +6,7 @@
 
 
   <div id="content">
-
-    <div class="row mb-1">
-      <div class="">
-        <div class="card rounded-0">
-          <div class="d-flex justify-content-between">
-            <h5 class="card-title">Tableau de bord</h5>
-            <button type="button" class="btn btn-sm btn-link">Déconnexion</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <app-navbar></app-navbar>
     <div class="row mb-1">
       <div class="">
         <div class="card rounded-0 border-0">
@@ -25,90 +14,175 @@
             <h5 class="card-title">Formulaire de recherche </h5>
           </div>
           <form [formGroup]="myForm" (ngSubmit)="onSubmit()" >
+            <div class="d-flex form-group gap-2">
+              <div class="form-group">
+                <div>
+                  <label for="type"  class="form-label">Type de bien</label>
+                </div>
 
-            <div class="d-flex form-group gap-4">
-              <div class="form-group">
-                <label for="type"  class="form-label">Type de bien</label>
-                <select class="form-select form-select" id="type" formControlName="type" >
-                  <option>Selectionner le type de bien</option>
-                  <option>Maison</option>
-                  <option>Appartement</option>
-                  <option>Loft</option>
-                  <option>Villa</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="city"  class="form-label">Ville</label>
-                <input type="text" class="form-control form-control" id="city" formControlName="city"  maxlength="5"/>
-              </div>
-              <div class="form-group">
-                <label for="zip"  class="form-label">Code postal</label>
-                <input type="text" class="form-control form-control" id="zip" formControlName="zip"  maxlength="5"/>
-              </div>
 
-              <div class="form-group">
-                <label for="budgetMin" class="form-label">Budget Min.</label>
-                <input type="text" class="form-control form-control" id="budgetMin" formControlName="budgetMin" placeholder="" maxlength="5"/>
+                <p-multiSelect
+                  id="type"
+                  [options]="services"
+                  [(ngModel)]= propertyService.searchPropertyDto.type
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="Selectionner le service"
+                  optionLabel="name"
+                  display="chip"
+                  styleClass="custom-size-multiselect"
+                />
+
               </div>
 
+
               <div class="form-group">
-                <label for="budgetMax"  class="form-label">Budget Max.</label>
-                <input type="text" class="form-control form-control" id="budgetMax" formControlName="budgetMax" placeholder="" maxlength="5"/>
+                <div>
+                  <label for="department"  class="form-label">Département</label>
+                </div>
+                <p-multiSelect
+                  id="department"
+                  [options]="services"
+                  [(ngModel)]= propertyService.searchPropertyDto.department
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="Selectionner le département"
+                  optionLabel="name"
+                  display="chip"
+                  styleClass="custom-size-multiselect"
+                />
+
+              </div>
+
+              <div class="form-group">
+                <div>
+                  <label for="city"  class="form-label">Ville</label>
+                </div>
+                <p-multiSelect
+                  id="city"
+                  [options]="services"
+                  [(ngModel)]= propertyService.searchPropertyDto.city
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="Selectionner la ville"
+                  optionLabel="name"
+                  display="chip"
+                  styleClass="custom-size-multiselect"
+                />
+
+              </div>
+
+              <div class="form-group">
+                <div>
+                  <label for="budgetMin"  class="form-label">Budget Min.</label>
+                </div>
+                <p-inputNumber
+                  id="budgetMin"
+                  [(ngModel)]= propertyService.searchPropertyDto.budgetMin
+                  [ngModelOptions]="{standalone: true}"
+                  mode="decimal"
+                  [showButtons]="true"
+                  inputId="minmax-buttons"
+                  [min]="0"
+                  [max]="1000"
+                  suffix=" €"
+                  styleClass="standard-input-size"
+                />
+              </div>
+
+              <div class="form-group">
+                <div>
+                  <label for="budgetMax"  class="form-label">Budget Max.</label>
+                </div>
+                <p-inputNumber
+                  id="budgetMax"
+                  [(ngModel)]= propertyService.searchPropertyDto.budgetMax
+                  [ngModelOptions]="{standalone: true}"
+                  mode="decimal"
+                  [showButtons]="true"
+                  inputId="minmax-buttons"
+                  [min]="0"
+                  [max]="1000"
+                  suffix=" €"
+                  styleClass="standard-input-size"
+                />
               </div>
 
             </div>
 
-            <div class=" d-flex form-group gap-4 my-4">
+            <div class=" d-flex form-group gap-4 my-2">
+              <div class="form-group">
+                <div>
+                  <label for="areaMin"  class="form-label">Surface Min.</label>
+                </div>
+                <p-inputNumber
+                  id="areaMin"
+                  [(ngModel)]= propertyService.searchPropertyDto.areaMin
+                  [ngModelOptions]="{standalone: true}"
+                  mode="decimal"
+                  [showButtons]="true"
+                  inputId="minmax-buttons"
+                  [min]="0"
+                  [max]="1000"
+                  suffix=" m²"
+                  styleClass="standard-input-size"
+                  />
+              </div>
 
-            <div class="form-group">
-              <!--<label for="areaMin"  class="form-label">Superficie Min.</label>-->
-              <input type="text" class="form-control form-control" id="areaMin" formControlName="areaMin"  maxlength="5"/>
-            </div>
-
-            <div class="form-group">
-              <!--<label for="areaMax"  class="form-label">Superficie Max.</label>-->
-              <input type="text" class="form-control form-control" id="areaMax" formControlName="areaMax"  maxlength="5"/>
-            </div>
 
               <div class="form-group">
-                <!--<label for="arrival" class="form-label">Date d'arrivee</label>-->
+                <div>
+                  <label for="areaMax"  class="form-label">Surface Max.</label>
+                </div>
+                <p-inputNumber
+                  id="areaMax"
+                  [(ngModel)]= propertyService.searchPropertyDto.areaMax
+                  [ngModelOptions]="{standalone: true}"
+                  mode="decimal"
+                  [showButtons]="true"
+                  inputId="minmax-buttons"
+                  [min]="0"
+                  [max]="1000"
+                  suffix=" m²"
+                  styleClass="standard-input-size"
+                />
+              </div>
+
+              <div class="form-group">
+                <div>
+                  <label for="arrival" class="form-label">Date d'arrivée</label>
+                </div>
                 <p-calendar
                   class="p-calendar"
-                  formControlName=arrival
+                  [(ngModel)]= propertyService.searchPropertyDto.arrival
+                  [ngModelOptions]="{standalone: true}"
                   id="arrival"
                   dateFormat="dd.mm.yy"
                   [showIcon]="true"
-
-
                 />
               </div>
 
               <div class="form-group ">
-                <!--<label for="departure"  class="form-label">Date de départ</label>-->
+                <div>
+                  <label for="departure"  class="form-label">Date de départ</label>
+                </div>
                 <p-calendar
+
                   class="p-calendar"
-                  formControlName="departure"
+                  [(ngModel)]= propertyService.searchPropertyDto.departure
+                  [ngModelOptions]="{standalone: true}"
                   id="departure"
                   dateFormat="dd.mm.yy"
                   [showIcon]="true"
                 />
               </div>
 
-
             </div>
             <div class="form-group">
               <div class=" action-buttons form-group mt-2">
-                <button class="btn btn-primary " type="button" (click)="onSubmit()">Rechercher</button>
+                <button class="btn btn-primary " type="submit" >Rechercher</button>
               </div>
-
             </div>
-
           </form>
-
         </div>
-
       </div>
-
     </div>
 
 
