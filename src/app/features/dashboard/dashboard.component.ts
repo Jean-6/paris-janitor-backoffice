@@ -1,26 +1,17 @@
-import { Component } from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../_services/auth.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
 
-
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(protected authService: AuthService) {
 
   }
 
   ngOnInit() {
-
   }
-
-  logout(){
-    this.authService.logout();
-  }
-
 }
