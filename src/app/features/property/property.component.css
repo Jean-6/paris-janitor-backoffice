@@ -1,31 +1,24 @@
-
 .card{
   height: 100%; /*Assure que toutes les cartes ont la même taille*/
   display: flex;
   flex-direction: column;
 }
-
-
 .card-img-top{
   height: 150px; /*Hauteur fixe pour les images*/
   object-fit: cover; /*Evite la déformation des images*/
 }
-
 .card-body{
   flex-grow: 1; /*Permet au contenu des s'etirer pour remplir la carte*/
   display: flex;
   flex-direction: column;
 }
-
 .card-text{
   flex-grow: 1; /*Equilibre l'espace entre le texte et le bouton*/
   overflow: hidden;/* Evite que le texte depasse */
   text-overflow: ellipsis; /* Ajoute des ... si le texte est trop long */
   white-space: nowrap; /* Empeche les retours à la ligne */
 }
-
 /*p-calendar*/
-
 .card{
   background-color: white;
   padding: 10px;
@@ -34,32 +27,24 @@
   width: 100%;
   text-align: left;
 }
-
-
-
-/**/
-
-/**/
-
+/*Multi select style*/
 ::ng-deep .custom-size-multiselect {
-  max-width: 348px;
-  min-width: 348px;
+  width: 100%;
+  max-width: 300px;
+  min-width: 300px;
 }
-
 ::ng-deep .custom-size-multiselect .p-multiselect {
   height: 37px;
   padding: 0 !important;
   display: flex;
   align-items: center;
 }
-
 ::ng-deep .custom-size-multiselect .p-multiselect-label-container {
   height: 38px;
   padding: 0 8px;
   display: flex;
   align-items: center;
 }
-
 ::ng-deep .custom-size-multiselect .p-multiselect-token {
   margin: 0 4px 0 0;
   padding: 2px 6px;
@@ -67,63 +52,25 @@
   height: auto;
   max-height: 26px;
 }
-
 ::ng-deep .custom-size-multiselect .p-placeholder {
   line-height: 38px;
   white-space: nowrap;
   overflow: auto;
 }
-
-/*---------------------------------------*/
-/*::ng-deep .custom-size-multiselect {
-  max-width: 320px;
-  width: 100%;
-}
-
-::ng-deep .custom-size-multiselect .p-multiselect {
-  min-height: 38px;
-  height: auto;
-  padding: 4px 8px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
-
-::ng-deep .custom-size-multiselect .p-multiselect-label-container {
-  flex: 1 1 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  align-items: center;
-}
-
-::ng-deep .custom-size-multiselect .p-multiselect-token {
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 13px;
-  padding: 2px 6px;
-}
-
-::ng-deep .custom-size-multiselect .p-placeholder {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-*/
+/* p-input number style*/
 ::ng-deep .standard-input-size .p-inputnumber {
   height: 38px;
   width: 100%;
+  max-width: 200px;
 }
-
 ::ng-deep .standard-input-size .p-inputtext {
   height: 38px;
   font-size: 14px;
   font-weight: bolder;
   padding: 0 0.5rem;
+  width: 100%;
+  max-width: 200px;
 }
-
 ::ng-deep .standard-input-size .p-inputnumber-button-group {
   height: 38px;
 }

@@ -1,0 +1,150 @@
+
+
+<!--
+<app-loading *ngIf="authService.isLoading"></app-loading>
+<div *ngIf="!authService.isLoading" class="d-flex">-->
+
+<div class="d-flex">
+  <div>
+    <app-aside-menu></app-aside-menu>
+  </div>
+
+
+  <div id="content">
+
+    <app-navbar></app-navbar>
+
+    <div class="row mb-1">
+      <div class="">
+        <div class="card rounded-0 border-0">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">Formulaire de recherche </h5>
+          </div>
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit()" >
+
+            <div class="d-flex gap-4">
+
+              <div class="form-group">
+                <div>
+                  <label for="status"  class="form-label">Status</label>
+                </div>
+                <p-multiSelect
+                  id="status"
+                  [options]="status"
+                  [(ngModel)]= userService.searchUserDto.status
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="Selectionner le status utilisateur"
+                  optionLabel="name"
+                  display="chip"
+                  styleClass="custom-size-multiselect"
+                />
+
+              </div>
+
+
+              <div class="form-group">
+                <div>
+                  <label for="service"  class="form-label">Service</label>
+                </div>
+                <p-multiSelect
+                  id="service"
+                  [options]="status"
+                  [(ngModel)]= userService.searchUserDto.service
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="Selectionner le service"
+                  optionLabel="name"
+                  display="chip"
+                  styleClass="custom-size-multiselect"
+                />
+              </div>
+
+
+              <div class="form-group">
+                <div>
+                  <label for="firstname"  class="form-label">Prénom(s)</label>
+                </div>
+                <div>
+                  <p-autoComplete id="firstname"
+                                  [(ngModel)]="userService.searchUserDto.firstname"
+                                  [suggestions]="firstnameSugg"
+                                  (completeMethod)="search($event)"
+                                  [ngModelOptions]="{standalone: true}"
+
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <div>
+                  <label for="lastname"  class="form-label">Nom</label>
+                </div>
+                <p-autoComplete id="lastname"
+                                [(ngModel)]="userService.searchUserDto.lastname"
+                                [suggestions]="firstnameSugg"
+                                (completeMethod)="search($event)"
+                                [ngModelOptions]="{standalone: true}"
+                />
+              </div>
+            </div>
+
+            <div class=" d-flex form-group gap-4 my-3">
+
+              <div class="form-group">
+                <label for="location" class="form-label">Localisation</label>
+                <input type="text" class="form-control form-control" id="location" formControlName="location" placeholder="" maxlength="5"/>
+              </div>
+
+              <div class="form-group">
+                <div>
+                  <label for="arrival" class="form-label">Date d'arrivee</label>
+                </div>
+                <p-calendar
+                  class="p-calendar"
+                  formControlName=from
+                  id="arrival"
+                  dateFormat="dd.mm.yy"
+                  [showIcon]="true"
+
+
+                />
+              </div>
+
+              <div class="form-group">
+                <div>
+                  <label for="departure" class="form-label">Date de départ</label>
+                </div>
+                <p-calendar
+                  class="p-calendar"
+                  formControlName="to"
+                  id="departure"
+                  dateFormat="dd.mm.yy"
+                  [showIcon]="true"
+                />
+              </div>
+
+
+            </div>
+            <div class="form-group">
+              <div class=" action-buttons form-group mt-2">
+                <button class="btn btn-primary " type="button" (click)="onSubmit()">Rechercher</button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+
+
+</div>
+
