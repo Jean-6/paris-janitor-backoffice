@@ -32,11 +32,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: ['',Validators.required],
       password: ['', Validators.required],
     });
-
   }
 
 
   onSubmit() {
+
     this.authService.isLoading = true;
     const loginRequest: LoginRequestDto = this.myForm.value;
 
@@ -52,11 +52,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.authResponse = res;
         this.authService.setIsAuthenticated(true);
         this.router.navigate(['/dashboard']);
+        this.alert.success('Connexion réussie');
       },
       error: (err:any) => {
+        this.alert.error('Connexion échouée');
         console.error(`Erreur de connexion: `, err);
       },
-      complete: () => this.authService.isLoading=false
+      complete: () => {
+        this.authService.isLoading=false;
+      }
     });
 
   }
