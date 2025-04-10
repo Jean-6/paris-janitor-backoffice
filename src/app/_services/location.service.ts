@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, map, Observable, tap} from "rxjs";
-import {Commune} from "../_dto/commune";
+import {catchError, map, Observable, of, shareReplay, tap} from "rxjs";
+import {City} from "../_dto/city";
 import {HttpClient} from "@angular/common/http";
-import {Department} from "../_dto/department";
 
 @Injectable({
   providedIn: 'root'
@@ -10,48 +9,54 @@ import {Department} from "../_dto/department";
 export class LocationService {
   private apiUrlCommune = 'https://geo.api.gouv.fr/communes';
   private apiUrlDepartment = 'https://geo.api.gouv.fr/departements/';
-  private _communes$ = new BehaviorSubject<Commune[]>([]);
-  private _loading$ = new BehaviorSubject<boolean>(false);
-
-
-  get loading$(): Observable<boolean> {
-    return this._loading$.asObservable();
-  }
-  get communes$(): Observable<Commune[]> {
-    return this._communes$.asObservable();
-  }
+  private communes$: Observable<any[]> | null = null;
+  private departments$: Observable<any[]> | null = null;
 
   constructor(private httpClient: HttpClient) { }
 
-  getCommunesFromServer():Observable<Commune[]>{
-    return this.httpClient.get<Commune[]>(`${this.apiUrlCommune}`).pipe(
-      tap(response => console.log('Raw response of commune: ', response)),
-      map(communes =>
-        communes.map(commune => ({
-          fullname: `${commune.nom} (${commune.codesPostaux[0]})`,
-          nom: commune.nom,
-          code: commune.code,
-          codeDepartement: commune.codeDepartement,
-          codesPostaux: commune.codesPostaux
-        }))
-      ),
-      tap(communes => {this._communes$.next(communes)})
-    );
+  getCommunesFromServer():Observable<any[]>{
+
+    if(!this.communes$){ // if also charged , return cached version
+      this.communes$ = this.httpClient.get<City[]>(`${this.apiUrlCommune}`).pipe(
+        tap(response => console.log('Raw response of commune: ', response)),
+        map(communes =>
+          communes.map(commune=>({
+            fullname: `${commune.nom} (${commune.codesPostaux[0]})`,
+            nom: commune.nom,
+            code: commune.code,
+            codeDepartement: commune.codeDepartement,
+            codesPostaux: commune.codesPostaux
+          }))),
+        shareReplay(1), // cached version
+        catchError(err =>{
+          console.error('Erreur lors du chargement des communes',err);
+          this.communes$ = null;
+          return of([]); // return empty list in case of error
+        })
+      );
+    }
+    return this.communes$;
   }
 
-  getDepartmentsFromServer():Observable<Department[]>{
-    return this.httpClient.get<Department[]>(`${this.apiUrlDepartment}`).pipe(
-      tap(response => console.log('Raw response of department od department:', response)),
-      map(departments =>
-        departments.map(department => ({
-          fullname: `${department.nom} (${department.code})`,
-          nom: `${department.nom}`,
-          code: department.code,
-        })))
-    )
+  getDepartmentsFromServer():Observable<any[]>{
+    if(!this.departments$){
+      this.departments$ = this.httpClient.get<City[]>(`${this.apiUrlDepartment}`).pipe(
+        tap(response => console.log('Raw response of department: ', response)),
+        map(departments =>
+          departments.map(dept=>({
+            fullname: `${dept.nom} (${dept.code})`,
+            nom: dept.nom,
+            code: dept.code
+          }))),
+        shareReplay(1),
+        catchError(err =>{
+          console.error('Erreur lors du chargement des departements',err);
+          this.departments$ = null;
+          return of([]); // return empty list in case of error
+        })
+      );
+    }
+    return this.departments$;
   }
 
-  private setLoadingStatus(isLoading: boolean): void {
-    this._loading$.next(isLoading);
-  }
 }

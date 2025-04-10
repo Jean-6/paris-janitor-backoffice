@@ -1,6 +1,6 @@
 
 
-export class Commune{
+export class City {
   fullname!:string;
   nom!: string;
   code!: string;

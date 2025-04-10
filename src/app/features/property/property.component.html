@@ -20,7 +20,7 @@
                 </div>
                 <p-multiSelect
                   id="type"
-                  [options]="services"
+                  [options]="typeOfProperty"
                   [(ngModel)]= propertyService.searchPropertyDto.type
                   [ngModelOptions]="{standalone: true}"
                   placeholder="Selectionner le service"
@@ -32,68 +32,26 @@
                 <div>
                   <label for="department"  class="form-label">Département</label>
                 </div>
-                <p-multiSelect
+                <p-autoComplete
                   id="department"
-                  [options]="services"
-                  [(ngModel)]= propertyService.searchPropertyDto.department
-                  [ngModelOptions]="{standalone: true}"
-                  placeholder="Selectionner le département"
-                  optionLabel="name"
-                  display="chip"
-                  styleClass="custom-size-multiselect"
-                />
+                  [(ngModel)]=propertyService.searchPropertyDto.department
+                  [suggestions]="filteredDepartment"
+                  (completeMethod)="searchDepartment($event)"
+                  field="fullname"
+                  [ngModelOptions]="{standalone: true}"/>
               </div>
               <div class="form-group">
                 <div>
                   <label for="city"  class="form-label">Ville</label>
                 </div>
-                <p-multiSelect
+                <p-autoComplete
                   id="city"
-                  [options]="services"
-                  [(ngModel)]= propertyService.searchPropertyDto.city
-                  [ngModelOptions]="{standalone: true}"
-                  placeholder="Selectionner la ville"
-                  optionLabel="name"
-                  display="chip"
-                  styleClass="custom-size-multiselect"
-                />
-
+                  [(ngModel)]=propertyService.searchPropertyDto.city
+                  [suggestions]="filteredCity"
+                  (completeMethod)="searchCity($event)"
+                  field="fullname"
+                  [ngModelOptions]="{standalone: true}"/>
               </div>
-              <!--<div class="form-group">
-                <div>
-                  <label for="budgetMin"  class="form-label">Budget Min.</label>
-                </div>
-                <p-inputNumber
-                  id="budgetMin"
-                  [(ngModel)]= propertyService.searchPropertyDto.budgetMin
-                  [ngModelOptions]="{standalone: true}"
-                  mode="decimal"
-                  [showButtons]="true"
-                  inputId="minmax-buttons"
-                  [min]="0"
-                  [max]="1000"
-                  suffix=" €"
-                  styleClass="standard-input-size"
-                />
-              </div>
-
-              <div class="form-group">
-                <div>
-                  <label for="budgetMax"  class="form-label">Budget Max.</label>
-                </div>
-                <p-inputNumber
-                  id="budgetMax"
-                  [(ngModel)]= propertyService.searchPropertyDto.budgetMax
-                  [ngModelOptions]="{standalone: true}"
-                  mode="decimal"
-                  [showButtons]="true"
-                  inputId="minmax-buttons"
-                  [min]="0"
-                  [max]="1000"
-                  suffix=" €"
-                  styleClass="standard-input-size"
-                />
-              </div>-->
             </div>
 
             <div class=" d-flex gap-4 my-2">
