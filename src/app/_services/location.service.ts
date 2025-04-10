@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {catchError, map, Observable, of, shareReplay, tap} from "rxjs";
 import {City} from "../_dto/city";
 import {HttpClient} from "@angular/common/http";
+import {AlertService} from "./alert.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class LocationService {
   private communes$: Observable<any[]> | null = null;
   private departments$: Observable<any[]> | null = null;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+              private alert: AlertService) { }
 
   getCommunesFromServer():Observable<any[]>{
 
@@ -30,6 +32,7 @@ export class LocationService {
         shareReplay(1), // cached version
         catchError(err =>{
           console.error('Erreur lors du chargement des communes',err);
+          this.alert.error("Erreur lors du chargement des communes")
           this.communes$ = null;
           return of([]); // return empty list in case of error
         })
@@ -51,6 +54,7 @@ export class LocationService {
         shareReplay(1),
         catchError(err =>{
           console.error('Erreur lors du chargement des departements',err);
+          this.alert.error("Erreur lors du chargement des departements")
           this.departments$ = null;
           return of([]); // return empty list in case of error
         })
