@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserService} from "../../_services/user.service";
+import {LocationService} from "../../_services/location.service";
+import {User} from "../../_models/User";
 
 interface Services {
   name: string,
@@ -29,10 +31,13 @@ export class UserComponent implements OnInit,OnDestroy{
 
   firstnameSugg=[];
 
+  users: User[] = [];
+
 
   constructor( private router: Router,
                private fb: FormBuilder,
-               protected userService: UserService) {
+               protected userService: UserService,
+               private location: LocationService) {
 
   }
 
@@ -70,13 +75,15 @@ export class UserComponent implements OnInit,OnDestroy{
       to:[]
     })
 
-
+    this.initObservables();
   }
 
-  logout(){
-    //this.authService.logout();
+  private initObservables(){
+    this.userService.users$.subscribe(data=>{
+      this.users = data;
+      console.log(data)
+    })
   }
-
   ngOnDestroy(): void {
   }
 
@@ -84,7 +91,8 @@ export class UserComponent implements OnInit,OnDestroy{
 
   }
 
-  search($event: any) {
+  search(event: any) {
+
 
   }
 }
