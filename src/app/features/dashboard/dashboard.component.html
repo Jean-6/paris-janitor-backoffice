@@ -2,17 +2,13 @@
 
 <app-loading *ngIf="authService.isLoading"></app-loading>
 <div *ngIf="!authService.isLoading" class="d-flex">
-
   <div>
     <app-aside-menu></app-aside-menu>
   </div>
-
-
   <div id="content">
     <app-navbar></app-navbar>
 
     <div class="row d-flex justify-content-start mt-3">
-
       <div class="col-xl-2 col-sm-5 col-11 mb-sm-2">
         <div class="card rounded-0">
           <div class="card-content">
