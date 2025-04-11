@@ -2,10 +2,12 @@ import {Injectable/*, signal, Signal*/} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable, tap} from "rxjs";
 import {User} from "../_models/User";
-import {AuthResponse} from "../_dto/authResponse";
+import {LoginResponseDto} from "../_dto/loginResponseDto";
 import {Router} from "@angular/router";
+import {RegisterRequestDto} from "../_dto/registerRequestDto";
+import {LoginRequestDto} from "../_dto/loginRequestDto";
 
-
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +15,11 @@ import {Router} from "@angular/router";
 
 export class AuthService {
 
-  private apiUrl = "http://localhost:9090/api/auth/login";
-  private apiUrlRegister ="http://localhost:9090/api/auth/register";
-  private apiUrlLogout ="http://localhost:9090/api/auth/logout";
-  private apiUrlRefreshToken ="http://localhost:9090/api/auth/refresh-token";
+  private login_ = "/auth/login";
+  private apiUrlRegister ="/auth/register";
+  private logout_ ="/auth/logout";
+  private apiUrlRefreshToken ="/auth/refresh-token";
+  isLoading = false;
 
 
   private _currentUser = new BehaviorSubject<User | null>(null); //To stock user connected state
@@ -34,13 +37,21 @@ export class AuthService {
   }
 
 
-  login(email: string, password: string ): Observable<{authResponse: AuthResponse}> {
-    return this._httpClient.post<{authResponse : AuthResponse}>(`${this.apiUrl}`,{ email, password },{ withCredentials: true });
+  login(loginRequest: LoginRequestDto): Observable<{loginResponse: LoginResponseDto}> {
+    console.log(`${environment.apiUrl}${this.login_}`)
+    return this._httpClient.post<{loginResponse : LoginResponseDto}>(`${environment.apiUrl}${this.login_}`,
+      loginRequest,
+      { withCredentials: true })
+      .pipe(
+        tap((response:any) => {
+          localStorage.setItem('token', response.accessToken);
+        })
+      );
   }
 
-  register(firstname: string,lastname: string,email: string,password: string){
-    return this._httpClient.post<{authResponse : AuthResponse}>(`${this.apiUrlRegister}`,
-      {firstname,lastname,email,password},
+  register(registerRequest: RegisterRequestDto){
+    return this._httpClient.post<{authResponse : LoginResponseDto}>(`${this.apiUrlRegister}`,
+      registerRequest ,
       { withCredentials: true });
   }
 
@@ -54,13 +65,18 @@ export class AuthService {
       );
   }
 
+  isLoggIn(): boolean{
+    const token = localStorage.getItem("token");
+    return token != null;
+  }
+
   logout(): Observable<any>{
-    return this._httpClient.post<any>(`${this.apiUrlLogout}` , {} ,{withCredentials: true})
+    return this._httpClient.post<any>(`${environment.apiUrl}${this.logout_}` , {} ,{withCredentials: true})
       .pipe(
         tap(() => {
-          //localStorage.removeItem("")
+          //localStorage.removeItem("token")
           this._currentUser.next(null);
-          this.router.navigate(['/login'])
+          //this.router.navigate(['/login'])
         })
       )
   }
