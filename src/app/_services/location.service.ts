@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {catchError, map, Observable, of, shareReplay, tap} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, of, shareReplay, tap} from "rxjs";
 import {City} from "../_dto/city";
 import {HttpClient} from "@angular/common/http";
 import {AlertService} from "./alert.service";
+import {Department} from "../_dto/department";
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,21 @@ import {AlertService} from "./alert.service";
 export class LocationService {
   private apiUrlCommune = 'https://geo.api.gouv.fr/communes';
   private apiUrlDepartment = 'https://geo.api.gouv.fr/departements/';
-  private communes$: Observable<any[]> | null = null;
-  private departments$: Observable<any[]> | null = null;
+
+  private citiesSubject = new BehaviorSubject<City[]>([]);
+  _communes$ = this.citiesSubject.asObservable();
+
+  private departmentsSubject = new BehaviorSubject<Department[]>([]);
+  _departments$ = this.departmentsSubject.asObservable();
+
+
+  communes$: Observable<any[]> | null = null;
+  departments$: Observable<any[]> | null = null;
 
   constructor(private httpClient: HttpClient,
               private alert: AlertService) { }
 
-  getCommunesFromServer():Observable<any[]>{
+  loadCities():Observable<any[]>{
 
     if(!this.communes$){ // if also charged , return cached version
       this.communes$ = this.httpClient.get<City[]>(`${this.apiUrlCommune}`).pipe(
@@ -41,7 +50,7 @@ export class LocationService {
     return this.communes$;
   }
 
-  getDepartmentsFromServer():Observable<any[]>{
+  loadDepartments():Observable<any[]>{
     if(!this.departments$){
       this.departments$ = this.httpClient.get<City[]>(`${this.apiUrlDepartment}`).pipe(
         tap(response => console.log('Raw response of department: ', response)),

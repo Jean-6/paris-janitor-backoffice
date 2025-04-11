@@ -69,8 +69,10 @@ export class PropertyComponent implements OnInit,OnDestroy{
   }
 
   private initObservables(){
-    this.locationService.getCommunesFromServer().subscribe(data=>{this.allCities=data;});
-    this.locationService.getDepartmentsFromServer().subscribe(data=>{this.allDepartments=data;})
+    this.locationService.loadCities()
+      .subscribe(data=>{this.allCities=data;});
+    this.locationService.loadDepartments()
+      .subscribe(data=>{this.allDepartments=data;})
   }
 
   onSubmit(){
