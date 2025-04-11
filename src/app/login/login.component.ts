@@ -18,22 +18,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   myForm!: FormGroup;
   private destroy$: Subject<void> = new Subject<void>();
 
-
   constructor(private formBuilder: FormBuilder,
               protected authService: AuthService,
               private router: Router,
               private alert: AlertService) {
 
   }
-
-
   ngOnInit() {
     this.myForm = this.formBuilder.group({
       email: ['',Validators.required],
       password: ['', Validators.required],
     });
   }
-
 
   onSubmit() {
 
@@ -55,6 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.alert.success('Connexion réussie');
       },
       error: (err:any) => {
+        this.router.navigate(['/login']);
         this.alert.error('Connexion échouée');
         console.error(`Erreur de connexion: `, err);
       },
