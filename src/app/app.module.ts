@@ -26,6 +26,8 @@ import { UserComponent } from './features/user/user.component';
 import { NavbarComponent } from './features/shared/navbar/navbar.component';
 import {MultiSelectModule} from "primeng/multiselect";
 import {AutoCompleteModule} from "primeng/autocomplete";
+import {FileUploadModule} from "primeng/fileupload";
+import {BadgeModule} from "primeng/badge";
 
 @NgModule({
   declarations: [
@@ -43,22 +45,24 @@ import {AutoCompleteModule} from "primeng/autocomplete";
     UserComponent,
     NavbarComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        ProgressSpinnerModule,
-        InputSwitchModule,
-        InputNumberModule,
-        CalendarModule,
-        BrowserAnimationsModule,
-        ToastModule,
-        MessageModule,
-        MultiSelectModule,
-        FormsModule,
-        AutoCompleteModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    ProgressSpinnerModule,
+    InputSwitchModule,
+    InputNumberModule,
+    CalendarModule,
+    BrowserAnimationsModule,
+    ToastModule,
+    MessageModule,
+    MultiSelectModule,
+    FormsModule,
+    AutoCompleteModule,
+    FileUploadModule,
+    BadgeModule
+  ],
   providers: [MessageService],
   bootstrap: [AppComponent]
 })

@@ -6,6 +6,10 @@ import {SignupComponent} from "./signup/signup.component";
 import {AuthGuard} from "./_guards/auth.guard";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import {PropertyComponent} from "./features/property/property.component";
+import {DetailsComponent} from "./features/property/details/details.component";
+import {AddPropertyComponent} from "./features/property/add-property/add-property.component";
+import {UserComponent} from "./features/user/user.component";
 
 const routes: Routes = [
   {
@@ -30,10 +34,15 @@ const routes: Routes = [
     component:ResetPasswordComponent
   },
   {
-    path : 'dashboard',
-    component:DashboardComponent,
-    canActivate: [AuthGuard],
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivateChild: [AuthGuard]
   },
+  {path : 'user-list', component:UserComponent},
+  {path : 'property-list', component:PropertyComponent},
+  {path : 'property-details', component:DetailsComponent},
+  {path : 'property-adding', component:AddPropertyComponent}
+
 ];
 
 @NgModule({
