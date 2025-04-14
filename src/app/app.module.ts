@@ -28,6 +28,11 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {FileUploadModule} from "primeng/fileupload";
 import {BadgeModule} from "primeng/badge";
+import {TableModule} from "primeng/table";
+import {DialogModule} from "primeng/dialog";
+import {ChipsModule} from "primeng/chips";
+import {TagModule} from "primeng/tag";
+import {FieldsetModule} from "primeng/fieldset";
 
 @NgModule({
   declarations: [
@@ -61,7 +66,12 @@ import {BadgeModule} from "primeng/badge";
     FormsModule,
     AutoCompleteModule,
     FileUploadModule,
-    BadgeModule
+    BadgeModule,
+    TableModule,
+    DialogModule,
+    ChipsModule,
+    TagModule,
+    FieldsetModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
