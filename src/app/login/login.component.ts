@@ -2,10 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../_services/auth.service";
-import {LoginResponseDto} from "../_dto/loginResponseDto";
+import {LoginResponse} from "../_dto/loginResponse";
 import {catchError, Subject, takeUntil} from "rxjs";
 import {AlertService} from "../_services/alert.service";
-import {LoginRequestDto} from "../_dto/loginRequestDto";
+import {LoginRequest} from "../_dto/loginRequest";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ import {LoginRequestDto} from "../_dto/loginRequestDto";
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  authResponse: LoginResponseDto | null = null;
+  authResponse: LoginResponse | null = null;
   myForm!: FormGroup;
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit() {
 
     this.authService.isLoading = true;
-    const loginRequest: LoginRequestDto = this.myForm.value;
+    const loginRequest: LoginRequest = this.myForm.value;
 
     this.authService.login(loginRequest).pipe(
       catchError((error)=>{

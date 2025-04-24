@@ -1,4 +1,6 @@
-export class LoginRequestDto {
+
+
+export class LoginRequest {
   private email?: string;
   private password?: string;
 }
