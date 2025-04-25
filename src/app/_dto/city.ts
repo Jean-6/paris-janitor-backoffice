@@ -1,9 +1,7 @@
-
-
 export class City {
-  fullname!:string;
+  nameAndPostCode!:string;
   nom!: string;
-  code!: string;
-  codeDepartement!: string;
+  //code!: string;
+  //codeDepartement!: string;
   codesPostaux!:string[]
 }

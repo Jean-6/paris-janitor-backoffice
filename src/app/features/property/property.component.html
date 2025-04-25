@@ -30,14 +30,14 @@
               </div>
               <div class="form-group">
                 <div>
-                  <label for="department"  class="form-label">Département</label>
+                  <label   class="form-label">Département</label>
                 </div>
                 <p-autoComplete
                   id="department"
                   [(ngModel)]=propertyService.searchPropertyDto.department
-                  [suggestions]="filteredDepartment"
-                  (completeMethod)="searchDepartment($event)"
-                  field="fullname"
+                  [suggestions]=locationService.filteredDepartment
+                  (completeMethod)=locationService.searchDepartment($event)
+                  field="nameAndCode"
                   [ngModelOptions]="{standalone: true}"/>
               </div>
               <div class="form-group">
@@ -47,9 +47,9 @@
                 <p-autoComplete
                   id="city"
                   [(ngModel)]=propertyService.searchPropertyDto.city
-                  [suggestions]="filteredCity"
-                  (completeMethod)="searchCity($event)"
-                  field="fullname"
+                  [suggestions]=locationService.filteredCity
+                  (completeMethod)=locationService.searchCity($event)
+                  field="nameAndPostCode"
                   [ngModelOptions]="{standalone: true}"/>
               </div>
             </div>

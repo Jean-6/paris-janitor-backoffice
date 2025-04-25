@@ -1,8 +1,6 @@
-
-
-
 export class Department {
-  fullname!: string;
-  nom!: string;
+  nameAndCode!: string;
   code!: string;
+  //codeRegion!: string;
+  nom!: string;
 }
