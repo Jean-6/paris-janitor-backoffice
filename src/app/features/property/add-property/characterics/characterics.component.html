@@ -1,0 +1,313 @@
+
+<!--
+<app-loading *ngIf="authService.isLoading"></app-loading>
+<div *ngIf="!authService.isLoading" class="d-flex">
+  <div>
+    <app-aside-menu></app-aside-menu>
+  </div>
+  <div id="content">
+    <app-navbar></app-navbar>
+    <div>
+    </div>
+
+    <div>
+      <div >
+        <div class="card_add_ads rounded-0 border-0">
+          <div class="card-header-pills fs-5 py-3 ">Quel bien voulez-vous louer ?</div>
+          <form [formGroup]="steps[0]" class="">
+
+            <div class="row ">
+              <div class="form-group ">
+                <label>Type de bien *</label>
+                <select  id="type" class="form-select fs-6 w-auto" formControlName="type" required >
+                  <option value="Apart">Appartement</option>
+                  <option value="Home">Maison</option>
+                  <option value="Studio">Studio</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-flex py-4 gap-4">
+              <div class="form-group col-md-3">
+                <label>Adresse de votre bien *</label>
+                <input type="text"  class="form-control fs-6 col-6" formControlName="address" placeholder="N°, nom de rue" required />
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Ville ou Code postal</label>
+                <input type="text"  class="form-control fs-6" formControlName="zip" placeholder="Paris ou 75000" required />
+              </div>
+            </div>
+
+            <div class="d-flex gap-4">
+              <div class="form-group ">
+                <div> <label>Surface habitable *</label></div>
+                <p-inputNumber
+                  [showButtons]="true"
+                  [min]="0"
+                  inputId="stacked"
+                  mode="decimal"
+                  suffix=" m²"
+                  class="input-normal"
+                  formControlName="area"
+                >
+                </p-inputNumber>
+              </div>
+
+              <div class="form-group ">
+                <div> <label>Nombre de pieces  *</label></div>
+                <p-inputNumber
+                  [showButtons]="true"
+                  [min]="0"
+                  inputId="stacked"
+                  mode="decimal"
+                  suffix=" m²"
+                  class="input-normal"
+                  formControlName="peaces"
+                >
+                </p-inputNumber>
+              </div>
+            </div>
+
+            <div class="d-flex py-4 gap-4">
+              <div class="form-group">
+                <div><label>Nombre de chambre</label></div>
+                <p-inputNumber
+                  [showButtons]="true"
+                  [min]="0"
+                  inputId="stacked"
+                  mode="decimal"
+                  class="input-normal"
+                  formControlName="rooms"
+                >
+                </p-inputNumber>
+              </div>
+
+              <div class="form-group ">
+                <div>  <label>Nombre de salles de bain </label></div>
+                <p-inputNumber
+                  [showButtons]="true"
+                  [min]="0"
+                  inputId="stacked"
+                  mode="decimal"
+                  class="input-normal"
+                  formControlName="bathrooms"
+                >
+                </p-inputNumber>
+              </div>
+
+            </div>
+
+            <div class="d-flex py-2 gap-5">
+
+              <div class="form-group ">
+                <div><label>Votre bien est-il meublé ? *</label></div>
+                <p-inputSwitch
+                  [(ngModel)]="checked"
+                  [ngModelOptions]="{standalone: true}"
+                ></p-inputSwitch>
+              </div>
+
+              <div class="form-group">
+                <div><label>Wifi *</label></div>
+                <p-inputSwitch
+                  [(ngModel)]="checked"
+                  [ngModelOptions]="{standalone: true}"
+                ></p-inputSwitch>
+              </div>
+
+              <div class="form-group">
+                <div><label>Climatisation</label></div>
+                <p-inputSwitch
+                  [(ngModel)]="checked"
+                  [ngModelOptions]="{standalone: true}"
+                ></p-inputSwitch>
+              </div>
+
+              <div class="form-group">
+                <div><label>Garage</label></div>
+                <p-inputSwitch
+                  [(ngModel)]="checked"
+                  [ngModelOptions]="{standalone: true}"
+                ></p-inputSwitch>
+              </div>
+
+              <div class="form-group">
+                <div><label>Cuisine équipée</label></div>
+                <p-inputSwitch
+                  [(ngModel)]="checked"
+                  [ngModelOptions]="{standalone: true}"
+                ></p-inputSwitch>
+              </div>
+
+
+              <div class="form-group">
+                <div><label>Espaces extérieurs </label></div>
+                <p-inputSwitch
+                  [(ngModel)]="checked"
+                  [ngModelOptions]="{standalone: true}"
+                ></p-inputSwitch>
+              </div>
+            </div>
+            <div class=" py-2 gap-5">
+              <div><label>Texte de l'annonce </label></div>
+                <textarea id="float-input" rows="5" cols="70" pInputTextarea></textarea>
+            </div>
+            <div class="d-flex py-4 gap-5">
+              <button type="submit" class="btn btn-primary" [disabled]="currentStep ===0" (click)="previousStep()">Retour</button>
+              <button type="submit" class="btn btn-primary mx-2"  *ngIf="currentStep < steps.length-1" [ngClass]="{'mx-0':'mx-0'}" (click)="nextStep()" >Suivant</button>
+              <button type="submit" class="btn btn-primary mx-2" *ngIf="currentStep === steps.length-1" (click)="submitMultiStepForm()" >Soumettre</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+<form [formGroup]="form"  class="" (ngSubmit)="onNext()">
+
+  <div class="row ">
+    <div class="form-group ">
+      <label>Type de bien *</label>
+      <select  id="type" class="form-select fs-6 w-auto" formControlName="type" required >
+        <option value="Apart">Appartement</option>
+        <option value="Home">Maison</option>
+        <option value="Studio">Studio</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="d-flex py-4 ">
+    <div class="form-group ">
+      <label>Adresse de votre bien *</label>
+      <input pInputText type="text"  placeholder="N°, nom de rue" formControlName="address" required class="input-normal" style="width: 400px"/>
+    </div>
+
+  <div class="form-group ">
+      <label for="city">Ville</label>
+    <p-autoComplete
+      id="city"
+      formControlName="city"
+      [suggestions]="locationService.filteredCity"
+      (completeMethod)="locationService.searchCity($event)"
+      field="nameAndPostCode"
+      [forceSelection]="true"
+    ></p-autoComplete>
+  </div>
+
+
+  </div>
+
+  <div class="d-flex gap-4">
+    <div class="form-group ">
+      <div> <label>Surface habitable *</label></div>
+      <p-inputNumber
+        [showButtons]="true"
+        [min]="0"
+        inputId="stacked"
+        mode="decimal"
+        suffix=" m²"
+        class="input-normal"
+        formControlName="area"
+      >
+      </p-inputNumber>
+    </div>
+
+    <div class="form-group ">
+      <div> <label>Nombre de pieces  *</label></div>
+      <p-inputNumber
+        [showButtons]="true"
+        [min]="0"
+        inputId="stacked"
+        mode="decimal"
+        suffix=" m²"
+        class="input-normal"
+        formControlName="peaces"
+      >
+      </p-inputNumber>
+    </div>
+  </div>
+
+  <div class="d-flex py-4 gap-4">
+    <div class="form-group">
+      <div><label>Nombre de chambre</label></div>
+      <p-inputNumber
+        [showButtons]="true"
+        [min]="0"
+        inputId="stacked"
+        mode="decimal"
+        class="input-normal"
+        formControlName="rooms"
+      >
+      </p-inputNumber>
+    </div>
+
+    <div class="form-group ">
+      <div>  <label>Nombre de salles de bain </label></div>
+      <p-inputNumber
+        [showButtons]="true"
+        [min]="0"
+        inputId="stacked"
+        mode="decimal"
+        class="input-normal"
+        formControlName="bathrooms"
+      >
+      </p-inputNumber>
+    </div>
+
+  </div>
+
+  <div class="d-flex py-2 gap-5">
+    <div class="form-group ">
+      <div><label>Votre bien est-il meublé ? *</label></div>
+      <p-inputSwitch
+        formControlName="isFurnished"
+      ></p-inputSwitch>
+    </div>
+
+    <div class="form-group">
+      <div><label>Wifi *</label></div>
+      <p-inputSwitch
+      formControlName="wifi"
+      ></p-inputSwitch>
+    </div>
+
+    <div class="form-group">
+      <div><label>Climatisation</label></div>
+      <p-inputSwitch
+        formControlName="airConditioning"
+      ></p-inputSwitch>
+    </div>
+
+    <div class="form-group">
+      <div><label>Garage</label></div>
+      <p-inputSwitch
+        formControlName ="garage"
+      ></p-inputSwitch>
+    </div>
+
+    <div class="form-group">
+      <div><label>Cuisine équipée</label></div>
+      <p-inputSwitch
+      formControlName ="equippedKitchen"
+      ></p-inputSwitch>
+    </div>
+
+
+    <div class="form-group">
+      <div><label>Espaces extérieurs </label></div>
+      <p-inputSwitch
+        formControlName = "outdoorSpaces"
+      ></p-inputSwitch>
+    </div>
+  </div>
+  <div class=" py-2 gap-5">
+    <div><label>Texte de l'annonce </label></div>
+      <textarea id="float-input" rows="5" cols="70" pInputTextarea></textarea>
+  </div>
+
+  <div class="d-flex py-4 gap-5">
+    <button type="submit" class="btn btn-primary mx-2" >Suivant</button>
+  </div>
+</form>
