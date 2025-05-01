@@ -1,0 +1,28 @@
+
+
+
+      <div>
+      <p-panel header="Charger les images du bien" [toggleable]="true" class="col">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Default file input example</label>
+          <input class="form-control" type="file" multiple id="formFile" (change)="onFileSelected($event)">
+        </div>
+        <!--<div class="card">
+          <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+        </div>-->
+       <!--Preview-->
+        <div class="preview-container">
+          <div class="preview-card" *ngFor="let image of imagePreviews;let i = index">
+            <img  [src]="image">
+            <button class="delete-btn" (click)="removeImage(i)">×</button>
+          </div>
+        </div>
+
+      </p-panel>
+      </div>
+
+
+      <div class="d-flex py-4 gap-5">
+        <button type="submit" class="btn btn-primary mx-2" (click)="onBack()">Retour</button>
+        <button type="submit" class="btn btn-primary mx-2" (click)="onNext()">Suivant</button>
+      </div>
