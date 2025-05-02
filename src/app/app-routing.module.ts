@@ -10,11 +10,14 @@ import {PropertyComponent} from "./features/property/property.component";
 import {DetailsComponent} from "./features/property/details/details.component";
 import {AddPropertyComponent} from "./features/property/add-property/add-property.component";
 import {UserComponent} from "./features/user/user.component";
+import {UploadImageComponent} from "./features/property/add-property/upload-image/upload-image.component";
+import {UploadReceiptComponent} from "./features/property/add-property/upload-receipt/upload-receipt.component";
+import {CharacteristicsComponent} from "./features/property/add-property/characteristics/characteristics.component";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'users',//login
     pathMatch: 'full'
   },
   //Others root
@@ -36,12 +39,15 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivateChild: [AuthGuard]
+    //canActivateChild: [AuthGuard]
   },
-  {path : 'user-list', component:UserComponent},
-  {path : 'property-list', component:PropertyComponent},
+  {path : 'users', component:UserComponent},
+  {path : 'properties', component:PropertyComponent},
   {path : 'property-details', component:DetailsComponent},
-  {path : 'property-adding', component:AddPropertyComponent}
+  {path : 'property-adding', component:AddPropertyComponent},
+  {path : 'characteristics', component:CharacteristicsComponent},
+  {path : 'upload-images', component:UploadImageComponent},
+  {path : 'upload-receipts', component:UploadReceiptComponent},
 
 ];
 

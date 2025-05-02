@@ -33,6 +33,15 @@ import {DialogModule} from "primeng/dialog";
 import {ChipsModule} from "primeng/chips";
 import {TagModule} from "primeng/tag";
 import {FieldsetModule} from "primeng/fieldset";
+import {PanelModule} from "primeng/panel";
+import {StepsModule} from "primeng/steps";
+import { UploadImageComponent } from './features/property/add-property/upload-image/upload-image.component';
+import { UploadReceiptComponent } from './features/property/add-property/upload-receipt/upload-receipt.component';
+import {ToolbarModule} from "primeng/toolbar";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import { ConfirmationComponent } from './features/property/add-property/confirmation/confirmation.component';
+import { CharacteristicsComponent } from './features/property/add-property/characteristics/characteristics.component';
+import {CardModule} from "primeng/card";
 
 @NgModule({
   declarations: [
@@ -48,7 +57,11 @@ import {FieldsetModule} from "primeng/fieldset";
     DetailsComponent,
     AddPropertyComponent,
     UserComponent,
-    NavbarComponent
+    NavbarComponent,
+    UploadImageComponent,
+    UploadReceiptComponent,
+    ConfirmationComponent,
+    CharacteristicsComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +84,12 @@ import {FieldsetModule} from "primeng/fieldset";
     DialogModule,
     ChipsModule,
     TagModule,
-    FieldsetModule
+    FieldsetModule,
+    PanelModule,
+    StepsModule,
+    ToolbarModule,
+    InputTextareaModule,
+    CardModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
