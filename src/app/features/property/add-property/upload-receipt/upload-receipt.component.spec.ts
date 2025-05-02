@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CharactericsComponent } from './characterics.component';
+import { UploadReceiptComponent } from './upload-receipt.component';
 
-describe('CharactericsComponent', () => {
-  let component: CharactericsComponent;
-  let fixture: ComponentFixture<CharactericsComponent>;
+describe('UploadReceiptComponent', () => {
+  let component: UploadReceiptComponent;
+  let fixture: ComponentFixture<UploadReceiptComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CharactericsComponent ]
+      declarations: [ UploadReceiptComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CharactericsComponent);
+    fixture = TestBed.createComponent(UploadReceiptComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
