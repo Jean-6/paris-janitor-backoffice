@@ -2,10 +2,10 @@ import {Injectable/*, signal, Signal*/} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable, tap} from "rxjs";
 import {User} from "../_models/User";
-import {LoginResponseDto} from "../_dto/loginResponseDto";
+import {LoginResponse} from "../_dto/loginResponse";
 import {Router} from "@angular/router";
 import {RegisterRequestDto} from "../_dto/registerRequestDto";
-import {LoginRequestDto} from "../_dto/loginRequestDto";
+import {LoginRequest} from "../_dto/loginRequest";
 
 import { environment } from "../../environments/environment";
 
@@ -37,9 +37,9 @@ export class AuthService {
   }
 
 
-  login(loginRequest: LoginRequestDto): Observable<{loginResponse: LoginResponseDto}> {
+  login(loginRequest: LoginRequest): Observable<{loginResponse: LoginResponse}> {
     console.log(`${environment.apiUrl}${this.login_}`)
-    return this._httpClient.post<{loginResponse : LoginResponseDto}>(`${environment.apiUrl}${this.login_}`,
+    return this._httpClient.post<{loginResponse : LoginResponse}>(`${environment.apiUrl}${this.login_}`,
       loginRequest,
       { withCredentials: true })
       .pipe(
@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   register(registerRequest: RegisterRequestDto){
-    return this._httpClient.post<{authResponse : LoginResponseDto}>(`${this.apiUrlRegister}`,
+    return this._httpClient.post<{authResponse : LoginResponse}>(`${this.apiUrlRegister}`,
       registerRequest ,
       { withCredentials: true });
   }
