@@ -1,0 +1,54 @@
+<div class="d-flex">
+  <div>
+    <app-aside-menu></app-aside-menu>
+  </div>
+  <div id="content">
+    <app-navbar></app-navbar>
+    <div class="py-4">
+      <p-toast></p-toast>
+      <p-steps
+        [model]="items"
+        [readonly]="false"
+        [activeIndex]="activeIndex"
+        (activeIndexChange)="onActiveIndexChange($event)">
+      </p-steps>
+    </div>
+
+
+    <ng-container [ngSwitch]="activeIndex">
+      <app-characteristics
+        *ngSwitchCase="0"
+
+        (formDataUpdated)="updateFormData('information', $event)"
+        (next)="nextStep()"
+      >
+      </app-characteristics>
+      <app-upload-image
+        *ngSwitchCase="1"
+        (formDataUpdated) = "updateFormData('images',$event)"
+        (next) = "nextStep()"
+        (back) = "prevStep()"
+      >
+
+      </app-upload-image>
+      <app-upload-receipt
+        *ngSwitchCase="2"
+        (formDataUpdated) = "updateFormData('documents',$event)"
+        (next) = "nextStep()"
+        (back) = "prevStep()"
+      >
+      </app-upload-receipt>
+
+      <app-confirmation
+        *ngSwitchCase="3"
+        [allFormData]="formData"
+        (next) = "nextStep()"
+        (back) = "prevStep()"
+      >
+
+      </app-confirmation>
+    </ng-container>
+
+  </div>
+</div>
+
