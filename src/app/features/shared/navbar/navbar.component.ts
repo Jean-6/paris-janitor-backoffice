@@ -12,30 +12,22 @@ import {Router} from "@angular/router";
 export class NavbarComponent implements OnInit,OnDestroy{
 
   private destroy$: Subject<void> = new Subject<void>();
-
   constructor(protected authService: AuthService,
               private alert: AlertService,
-              private router: Router) {
-  }
-
-  ngOnInit(): void {
-  }
-
+              private router: Router) {}
+  ngOnInit(): void {}
   onLogout() {
     this.authService.logout()
       .pipe(
         catchError((err) =>{
           this.alert.error('Une erreur est survenue');
+          this.router.navigate(['/login']);
           console.error(`Erreur de connexion: `,err);
           throw err;
         }),
         takeUntil(this.destroy$)
       ).subscribe({
-      next: (res:any) => {
-
-        this.router.navigate(['/login'])
-      },
-      error: (err:any) => {},
+      next: () => this.router.navigate(['/login']),
       complete: () => this.authService.isLoading=false
     });
   }
