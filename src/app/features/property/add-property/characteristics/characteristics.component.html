@@ -1,0 +1,188 @@
+
+<form [formGroup]="form"  class="" (ngSubmit)="onNext()">
+  <div class="row ">
+    <div class="form-group ">
+      <label>Type de bien *</label>
+      <select  id="type" class="form-select fs-6 w-auto" formControlName="type" required >
+        <option value="Apart">Appartement</option>
+        <option value="Home">Maison</option>
+        <option value="Studio">Studio</option>
+      </select>
+      <div *ngIf="form.controls['type'].invalid && form.controls['type'].touched" class="text-danger msg-error">
+        Sélectionnez le type de bien
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex py-4 ">
+    <div class="form-group ">
+      <label>Adresse de votre bien *</label>
+      <input pInputText type="text"  placeholder="N°, nom de rue" formControlName="address" required class="input-normal" style="width: 400px"/>
+      <div *ngIf="form.controls['address'].invalid && form.controls['address'].touched" class="text-danger msg-error">
+        Entrer une adresse
+      </div>
+    </div>
+
+    <div class="form-group ">
+      <label for="city">Ville</label>
+      <p-autoComplete
+        id="city"
+        formControlName="city"
+        placeholder="Entrer la ville ou le code postal"
+        [suggestions]="filteredCities"
+        (completeMethod)="filterCity($event)"
+        field="nameAndPostCode"
+        [forceSelection]="true"
+      ></p-autoComplete>
+      <div *ngIf="form.controls['city'].invalid && form.controls['city'].touched" class="text-danger msg-error">
+        Sélectionnez une ville valide
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="d-flex gap-4">
+    <div class="form-group ">
+      <div> <label>Surface habitable *</label></div>
+      <p-inputNumber
+        [showButtons]="true"
+        [min]="0"
+
+        inputId="stacked"
+        mode="decimal"
+        suffix=" m²"
+        class="input-normal"
+        formControlName="area"
+      >
+      </p-inputNumber>
+      <div *ngIf="form.controls['area'].invalid && form.controls['area'].touched" class="text-danger msg-error">
+        La surface doit etre supérieur à 0
+      </div>
+    </div>
+
+    <div class="form-group ">
+      <div> <label>Nombre de pieces  *</label></div>
+      <p-inputNumber
+        [showButtons]="true"
+        [min]="1"
+        inputId="stacked"
+        mode="decimal"
+        class="input-normal"
+        formControlName="peaces"
+      >
+      </p-inputNumber>
+      <div *ngIf="form.controls['peaces'].invalid && form.controls['peaces'].touched" class="text-danger msg-error">
+        Le nombre de pièces doit etre supérieur à 0
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex py-4 gap-4">
+    <div class="form-group">
+      <div><label>Nombre de chambre</label></div>
+      <p-inputNumber
+        [showButtons]="true"
+        [min]="0"
+        inputId="stacked"
+        mode="decimal"
+        class="input-normal"
+        formControlName="rooms"
+      >
+      </p-inputNumber>
+    </div>
+
+    <div class="form-group ">
+      <div>  <label>Nombre de salles de bain </label></div>
+      <p-inputNumber
+        [showButtons]="true"
+        [min]="1"
+        inputId="stacked"
+        mode="decimal"
+        class="input-normal"
+        formControlName="bathrooms"
+      >
+      </p-inputNumber>
+    </div>
+
+  </div>
+
+  <div class="d-flex py-2 gap-5">
+    <div class="form-group ">
+      <div><label>Votre bien est-il meublé ? *</label></div>
+      <p-inputSwitch
+        formControlName="isFurnished"
+      ></p-inputSwitch>
+    </div>
+
+    <div class="form-group">
+      <div><label>Wifi *</label></div>
+      <p-inputSwitch
+        formControlName="wifi"
+      ></p-inputSwitch>
+    </div>
+
+    <div class="form-group">
+      <div><label>Climatisation</label></div>
+      <p-inputSwitch
+        formControlName="airConditioning"
+      ></p-inputSwitch>
+    </div>
+
+    <div class="form-group">
+      <div><label>Garage</label></div>
+      <p-inputSwitch
+        formControlName ="garage"
+      ></p-inputSwitch>
+    </div>
+
+    <div class="form-group">
+      <div><label>Cuisine équipée</label></div>
+      <p-inputSwitch
+        formControlName ="equippedKitchen"
+      ></p-inputSwitch>
+    </div>
+
+
+    <div class="form-group">
+      <div><label>Espaces extérieurs </label></div>
+      <p-inputSwitch
+        formControlName = "outdoorSpaces"
+      ></p-inputSwitch>
+    </div>
+  </div>
+
+
+  <div class="d-flex py-2 gap-5">
+    <div class="form-group ">
+      <div><label>Prix </label></div>
+      <p-inputNumber  formControlName ="rent" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal"
+                     spinnerMode="horizontal" [step]="0.25" decrementButtonClass="p-button-danger"
+                     incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+                     mode="currency" currency="EUR"
+                     class="input-normal"
+      >
+      </p-inputNumber>
+    </div>
+  </div>
+
+
+  <div class=" py-2 gap-5">
+    <div><label>Texte de l'annonce </label></div>
+    <textarea
+      id="float-input"
+      rows="5"
+      cols="70"
+      pInputTextarea
+      formControlName="description"
+    >
+      </textarea>
+    <div *ngIf="form.controls['description'].invalid && form.controls['description'].touched" class="text-danger msg-error">
+      La description doit etre supèrieur à 10 caractères
+    </div>
+  </div>
+
+  <div class="d-flex py-4 gap-5">
+    <button type="submit" class="btn btn-primary mx-2" >Suivant</button>
+  </div>
+</form>

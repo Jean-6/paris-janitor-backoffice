@@ -40,9 +40,6 @@
 }
 
 /* p-autocomplete style*/
-::ng-deep .custom-size-multiselect {
-
-}
 ::ng-deep p-autoComplete input {
   height: 38px;
   padding: 0.375rem 0.75rem;
@@ -64,4 +61,14 @@ p-table td {
 p-table th {
   padding: 0.75rem;
   text-align: center;
+}
+
+/*Dialog*/
+::ng-deep .p-dialog {
+  display: flex;
+  flex-direction: column;
+}
+::ng-deep .p-dialog-content {
+  flex-grow: 1;
+  overflow-y: auto;
 }
