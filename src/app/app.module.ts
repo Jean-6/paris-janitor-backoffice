@@ -42,6 +42,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import { ConfirmationComponent } from './features/property/add-property/confirmation/confirmation.component';
 import { CharacteristicsComponent } from './features/property/add-property/characteristics/characteristics.component';
 import {CardModule} from "primeng/card";
+import { PropertyListComponent } from './features/shared/property-list/property-list.component';
+import { DetailsOfPropertyComponent } from './features/shared/details-of-property/details-of-property.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import {CardModule} from "primeng/card";
     UploadImageComponent,
     UploadReceiptComponent,
     ConfirmationComponent,
-    CharacteristicsComponent
+    CharacteristicsComponent,
+    PropertyListComponent,
+    DetailsOfPropertyComponent
   ],
   imports: [
     BrowserModule,
