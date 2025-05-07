@@ -12,8 +12,6 @@ import {FormBuilder} from "@angular/forms";
 })
 export class AddPropertyComponent implements OnInit{
 
-
-
   @Input() items: MenuItem[] = [];
   @Input() activeIndex: number = 0;
   @Output() activeIndexChange = new EventEmitter<number>();
@@ -24,8 +22,6 @@ export class AddPropertyComponent implements OnInit{
     documents:{},
     confirmation:{}
   }
-
-
 
   constructor(public messageService: MessageService,
               private router: Router,
@@ -68,9 +64,7 @@ export class AddPropertyComponent implements OnInit{
 
   updateFormData(step: string, data: any){
     this.formData[step] = data;
-    console.log('Form data updated: ',this.formData);
   }
-
 
   onActiveIndexChange(index: number) {
   }

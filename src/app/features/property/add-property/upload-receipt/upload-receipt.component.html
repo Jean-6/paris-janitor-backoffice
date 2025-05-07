@@ -1,66 +1,49 @@
 
-      <div class="card_add_ads rounded-0 border-0">
-        <div class="card-header-pills fs-5 py-3 ">Pieces justificatives</div>
+<div class="card_add_ads rounded-0 border-0">
+  <div class="card-header-pills fs-5 py-3 "></div>
+  <form action="/submit" method="post" enctype="multipart/form-data">
+    <div class="d-flex gap-2 ">
+      <p-panel header="Pieces d'identités" [toggleable]="true" class="col-md-6">
+        <fieldset>
+          <legend></legend>
+          <label for="identityDoc">Choisissez un fichier PDF :</label><br>
+          <input class="form-control" type="file" name="identityDoc" accept="application/pdf" id="identityDoc" multiple (change)="onFileSelected($event)" required>
+        </fieldset>
+        <div *ngIf="selectedDocs.length > 0 " class="mt-2">
+          <ul style="list-style-type: none">
+            <li *ngFor="let file of selectedDocs">{{file.name}}</li>
+          </ul>
+        </div>
+      </p-panel>
+      <p-panel header="Dossier de diagnostic technique (DDT)"  [toggleable]="true" class="col-md-6">
+        <fieldset>
+          <legend></legend>
+          <label for="technicalDiagnostic">Choisissez un fichier PDF :</label><br>
+          <input class="form-control" type="file" name="file" accept="application/pdf" id="technicalDiagnostic" multiple (change)="onFileSelected($event)" required>
+        </fieldset>
+      </p-panel>
+    </div>
+    <div class="d-flex gap-2 my-3 ">
+      <p-panel header="Titre de propriété" [toggleable]="true" class="col-md-6">
+        <fieldset>
+          <legend></legend>
+          <label for="titleOfOwnership">Choisissez un fichier PDF :</label><br>
+          <input class="form-control" type="file" name="file" accept="application/pdf" id="titleOfOwnership" multiple (change)="onFileSelected($event)" required>
+        </fieldset>
 
-          <div class="d-flex gap-2 ">
+      </p-panel>
+      <p-panel header="Autres documents" [toggleable]="true" class="col-md-6">
+        <fieldset>
+          <legend></legend>
+          <label for="otherDocument">Choisissez un fichier PDF :</label><br>
+          <input class="form-control" type="file" name="file" accept="application/pdf" id="otherDocument" multiple (change)="onFileSelected($event)" required>
+        </fieldset>
+      </p-panel>
+    </div>
 
-              <p-panel header="Pieces d'identités" [toggleable]="true" class="col-md-6">
-                <p>
-
-                </p>
-
-                <div class="mb-3">
-                  <label for="identityDocument" class="form-label">Default file input example</label>
-                  <input id="identityDocument" class="form-control" type="file" accept="application/pdf" multiple (change)="onFileSelected($event)" >
-                </div>
-                <!--<div class="card">
-                  <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
-                </div>-->
-              </p-panel>
-
-              <p-panel header="Dossier de diagnostic technique (DDT)" [toggleable]="true" class="col-md-6">
-                <p>
-                </p>
-                <div class="mb-3">
-                  <label for="technicalDiagnosticFile" class="form-label">Default file input example</label>
-                  <input id="technicalDiagnosticFile" class="form-control" type="file" accept="application/pdf" multiple (change)="onFileSelected($event)">
-                </div>
-                <!--<div class="card">
-                  <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
-                </div>-->
-              </p-panel>
-
-          </div>
-
-          <div class="d-flex gap-2 py-3">
-
-            <p-panel header="Titre de propriété" [toggleable]="true" class="col-md-6">
-              <p>
-              </p>
-              <div class="mb-3">
-                <label for="titleOfOwnership" class="form-label">Default file input example</label>
-                <input id="titleOfOwnership" class="form-control" type="file" accept="application/pdf" multiple (change)="onFileSelected($event)">
-              </div>
-              <!--<div class="card">
-                <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
-              </div>-->
-            </p-panel>
-
-            <p-panel header="Autres documents" [toggleable]="true" class="col-md-6">
-              <p>
-              </p>
-              <div class="mb-3">
-                <label for="otherDocument" class="form-label">Sélectionner un fichier au format PDF</label>
-                <input id="otherDocument" class="form-control" type="file" accept="application/pdf" multiple (change)="onFileSelected($event)">
-              </div>
-              <!--<div class="card">
-                <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
-              </div>-->
-            </p-panel>
-          </div>
-          <div class="d-flex py-4 gap-5">
-            <button type="submit" class="btn btn-primary mx-2" (click)="onBack()">Retour</button>
-            <button type="submit" class="btn btn-primary mx-2" (click)="onNext()">Suivant</button>
-            <!--<button type="submit" class="btn btn-primary mx-2">Soumettre</button>-->
-          </div>
-      </div>
+    <div class="d-flex py-4 gap-5">
+      <button type="submit" class="btn btn-primary mx-2" (click)="onBack()">Retour</button>
+      <button type="submit" class="btn btn-primary mx-2" (click)="onNext()">Suivant</button>
+    </div>
+  </form>
+</div>
