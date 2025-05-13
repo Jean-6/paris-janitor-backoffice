@@ -13,7 +13,6 @@ import { LoadingComponent } from './features/shared/loading/loading.component';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { AsideMenuComponent } from './features/shared/aside-menu/aside-menu.component';
 import { PropertyComponent } from './features/property/property.component';
-import { DetailsComponent } from './features/property/details/details.component';
 import { AddPropertyComponent } from './features/property/add-property/add-property.component';
 import {InputSwitchModule} from "primeng/inputswitch";
 import {InputNumberModule} from "primeng/inputnumber";
@@ -43,7 +42,9 @@ import { ConfirmationComponent } from './features/property/add-property/confirma
 import { CharacteristicsComponent } from './features/property/add-property/characteristics/characteristics.component';
 import {CardModule} from "primeng/card";
 import { PropertyListComponent } from './features/shared/property-list/property-list.component';
-import { DetailsOfPropertyComponent } from './features/shared/details-of-property/details-of-property.component';
+import { PropertyDetailsComponent } from './features/shared/property-details/property-details.component';
+import {GalleriaModule} from "primeng/galleria";
+import {FullCalendarModule} from "@fullcalendar/angular";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,6 @@ import { DetailsOfPropertyComponent } from './features/shared/details-of-propert
     LoadingComponent,
     AsideMenuComponent,
     PropertyComponent,
-    DetailsComponent,
     AddPropertyComponent,
     UserComponent,
     NavbarComponent,
@@ -65,7 +65,7 @@ import { DetailsOfPropertyComponent } from './features/shared/details-of-propert
     ConfirmationComponent,
     CharacteristicsComponent,
     PropertyListComponent,
-    DetailsOfPropertyComponent
+    PropertyDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +93,9 @@ import { DetailsOfPropertyComponent } from './features/shared/details-of-propert
     StepsModule,
     ToolbarModule,
     InputTextareaModule,
-    CardModule
+    CardModule,
+    GalleriaModule,
+    FullCalendarModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
