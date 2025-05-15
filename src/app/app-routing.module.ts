@@ -7,12 +7,12 @@ import {AuthGuard} from "./_guards/auth.guard";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import {PropertyComponent} from "./features/property/property.component";
-import {DetailsComponent} from "./features/property/details/details.component";
 import {AddPropertyComponent} from "./features/property/add-property/add-property.component";
 import {UserComponent} from "./features/user/user.component";
 import {UploadImageComponent} from "./features/property/add-property/upload-image/upload-image.component";
 import {UploadReceiptComponent} from "./features/property/add-property/upload-receipt/upload-receipt.component";
 import {CharacteristicsComponent} from "./features/property/add-property/characteristics/characteristics.component";
+import {PropertyDetailsComponent} from "./features/shared/property-details/property-details.component";
 
 const routes: Routes = [
   {
@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {path : 'users', component:UserComponent},
   {path : 'properties', component:PropertyComponent},
-  {path : 'property-details', component:DetailsComponent},
+  {path : 'property-details', component:PropertyDetailsComponent},
   {path : 'property-adding', component:AddPropertyComponent},
   {path : 'characteristics', component:CharacteristicsComponent},
   {path : 'upload-images', component:UploadImageComponent},

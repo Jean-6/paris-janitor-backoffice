@@ -1,0 +1,11 @@
+
+::ng-deep full-calendar {
+  height: 500px;
+  width: 100%;
+}
+
+
+::ng-deep .normal-button .p-button {
+  font-size: 1rem;
+  padding: 0.60rem 1.5rem;
+}
