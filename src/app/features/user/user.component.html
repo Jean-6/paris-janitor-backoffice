@@ -1,11 +1,6 @@
 
-
-<!--
-<app-loading *ngIf="authService.isLoading"></app-loading>
-<div *ngIf="!authService.isLoading" class="d-flex">-->
-
-<div class="d-flex">
-  <div>
+<div class="d-flex wrapper">
+  <div class="bg-light" style="width:290px; min-height: 100vh;">
     <app-aside-menu></app-aside-menu>
   </div>
   <div id="content">
@@ -59,6 +54,7 @@
                                   [suggestions]="filteredUser"
                                   (completeMethod)="searchUsername($event)"
                                   field="fullName"
+                                  [forceSelection]="true"
                                   [ngModelOptions]="{standalone: true}"/>
                 </div>
               </div>
@@ -76,7 +72,10 @@
                   [suggestions]=locationService.filteredDepartment
                   (completeMethod)=locationService.searchDepartment($event)
                   field="nameAndCode"
-                  [ngModelOptions]="{standalone: true}"/>
+                  [forceSelection]="true"
+                  [ngModelOptions]="{standalone: true}"
+                />
+
               </div>
               <div class="form-group">
                 <div>
@@ -88,7 +87,9 @@
                   [suggestions]=locationService.filteredCity
                   (completeMethod)=locationService.searchCity($event)
                   field="nameAndPostCode"
-                  [ngModelOptions]="{standalone: true}"/>
+                  [forceSelection]="true"
+                  [ngModelOptions]="{standalone: true}"
+                />
               </div>
               <div class="form-group">
                 <div>
@@ -212,56 +213,30 @@
 
       <p-dialog
       [(visible)]="userDialog"
-      [style]="{ width:'40%',height:'80%', }"
+      [style]="{ width:'50%',height:'50%', }"
       header="Modifier les infos utilisateurs"
       [modal]="true"
       styleClass="p-fluid">
         <ng-template pTemplate="content">
-          <div class=" border-0"> <!--card-->
-            <div class=""> <!--card-body-->
+          <div class=" "> <!--card-->
+            <!--<div class="">--> <!--card-body-->
               <h3 class="card-title"></h3>
               <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-                <div class="d-flex gap-3">
-                  <div class="form-group">
-                    <label for="firstname">Prénom(s)</label>
-                    <input type="text" class="form-control" id=firstname formControlName="firstname" placeholder="Jean"/>
-                  </div>
-                  <div class="form-group">
-                    <label for="lastname">Nom</label>
-                    <input type="text" class="form-control" id="lastname" formControlName="lastname" placeholder="Jaures"/>
-                  </div>
+                <div class="form-group" >
+                  <label for="firstname4">Prénom(s)</label>
+                  <input type="text" class="form-control" id=firstname4 formControlName="firstname" placeholder="Jean"/>
                 </div>
-                <div class="d-flex gap-3">
-                  <div class="form-group">
-                    <label for="address">Adresse</label>
-                    <input type="text" class="form-control" id="address" formControlName="address" placeholder="Adresse"/>
-                  </div>
-
-                  <!--<div class="form-group">
-                    <label for="city">Ville</label>
-                    <input type="text" class="form-control" id="city" formControlName="city" placeholder="Ville"/>
-                  </div>-->
+                <div class="form-group">
+                  <label for="lastname">Nom</label>
+                  <input type="text" class="form-control" id="lastname" formControlName="lastname" placeholder="Jaures"/>
                 </div>
-                <div class="d-flex"></div>
-                <!-- <div class="d-flex">
-               <div class="form-group">
-                 <div class="form-group">
-                   <label for="city">Ville</label>
-                   <input type="text" class="form-control" id="city" formControlName="city" placeholder="Ville"/>
-                 </div>
-         <div class="form-group">
-             <div><label>Espaces extérieurs </label></div>
-             <p-inputSwitch
-               [(ngModel)]="checked"
-               [ngModelOptions]="{standalone: true}"
-             ></p-inputSwitch>
-           </div>
-               </div>
+                <div class="form-group">
+                  <label for="tel">Tel</label>
+                  <input type="text" class="form-control" id="tel" formControlName="lastname" placeholder="Jaures"/>
+                </div>
 
-             </div>-->
 
               </form>
-            </div>
           </div>
         </ng-template>
         <ng-template pTemplate="footer">

@@ -1,5 +1,6 @@
-<div class="d-flex">
-  <div>
+
+<div class="d-flex wrapper">
+  <div class="bg-light" style="width:290px; min-height: 100vh;">
     <app-aside-menu></app-aside-menu>
   </div>
   <div id="content">
@@ -18,14 +19,13 @@
     <ng-container [ngSwitch]="activeIndex">
       <app-characteristics
         *ngSwitchCase="0"
-
         (formDataUpdated)="updateFormData('information', $event)"
         (next)="nextStep()"
       >
       </app-characteristics>
       <app-upload-image
         *ngSwitchCase="1"
-        (formDataUpdated) = "updateFormData('images',$event)"
+        (formDataUpdated) = "updateFormData('pictures',$event)"
         (next) = "nextStep()"
         (back) = "prevStep()"
       >
@@ -45,7 +45,6 @@
         (next) = "nextStep()"
         (back) = "prevStep()"
       >
-
       </app-confirmation>
     </ng-container>
 
