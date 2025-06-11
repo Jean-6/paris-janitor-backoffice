@@ -1,21 +1,23 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from "../../../_services/auth.service";
 import {catchError, Subject, takeUntil} from "rxjs";
+import {AuthService} from "../../../_services/auth.service";
 import {AlertService} from "../../../_services/alert.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-navbar-top',
+  templateUrl: './navbar-top.component.html',
+  styleUrls: ['./navbar-top.component.css']
 })
-export class NavbarComponent implements OnInit,OnDestroy{
+export class NavbarTopComponent implements OnInit,OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   constructor(protected authService: AuthService,
               private alert: AlertService,
               private router: Router) {}
+
   ngOnInit(): void {}
+
   onLogout() {
     this.authService.logout()
       .pipe(
@@ -36,7 +38,5 @@ export class NavbarComponent implements OnInit,OnDestroy{
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-
 
 }

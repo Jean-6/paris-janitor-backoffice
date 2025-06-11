@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -22,7 +22,6 @@ import {ToastModule} from "primeng/toast";
 import { MessageModule } from 'primeng/message';
 import {MessageService} from "primeng/api";
 import { UserComponent } from './features/user/user.component';
-import { NavbarComponent } from './features/shared/navbar/navbar.component';
 import {MultiSelectModule} from "primeng/multiselect";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {FileUploadModule} from "primeng/fileupload";
@@ -45,6 +44,18 @@ import { PropertyListComponent } from './features/shared/property-list/property-
 import { PropertyDetailsComponent } from './features/shared/property-details/property-details.component';
 import {GalleriaModule} from "primeng/galleria";
 import {FullCalendarModule} from "@fullcalendar/angular";
+import {PaginatorModule} from "primeng/paginator";
+import { ProfileComponent } from './features/shared/profile/profile.component';
+import { StatusChangeComponent } from './features/status-change/status-change.component';
+import { BusinessInformationComponent } from './features/status-change/business-information/business-information.component';
+import { AreaOfInterventionComponent } from './features/status-change/area-of-intervention/area-of-intervention.component';
+import { ServicesComponent } from './features/status-change/services/services.component';
+import { AvailabilitiesComponent } from './features/status-change/availabilities/availabilities.component';
+import {PickListModule} from "primeng/picklist";
+import { UploadProviderReceiptComponent } from './features/status-change/upload-provider-receipt/upload-provider-receipt.component';
+import { ValidationStepComponent } from './features/status-change/validation-step/validation-step.component';
+import {BasicAuthInterceptor} from "./_interceptors/basic-auth.interceptor";
+import { NavbarTopComponent } from './features/shared/navbar-top/navbar-top.component';
 
 @NgModule({
   declarations: [
@@ -59,13 +70,21 @@ import {FullCalendarModule} from "@fullcalendar/angular";
     PropertyComponent,
     AddPropertyComponent,
     UserComponent,
-    NavbarComponent,
     UploadImageComponent,
     UploadReceiptComponent,
     ConfirmationComponent,
     CharacteristicsComponent,
     PropertyListComponent,
-    PropertyDetailsComponent
+    PropertyDetailsComponent,
+    ProfileComponent,
+    StatusChangeComponent,
+    BusinessInformationComponent,
+    AreaOfInterventionComponent,
+    ServicesComponent,
+    AvailabilitiesComponent,
+    UploadProviderReceiptComponent,
+    ValidationStepComponent,
+    NavbarTopComponent
   ],
   imports: [
     BrowserModule,
@@ -95,9 +114,17 @@ import {FullCalendarModule} from "@fullcalendar/angular";
     InputTextareaModule,
     CardModule,
     GalleriaModule,
-    FullCalendarModule
+    FullCalendarModule,
+    PaginatorModule,
+    PickListModule
   ],
-  providers: [MessageService],
+  providers: [MessageService,
+    //{
+      //provide: HTTP_INTERCEPTORS,
+      //useClass: BasicAuthInterceptor,
+      //multi: true,
+    //}
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

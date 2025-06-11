@@ -1,128 +1,84 @@
 
+<!--<nav class="col-12 col-xs-3 col-md-3 col-xl-2 px-0 bg-dark text-white sidebar">-->
+  <div class="d-flex flex-column p-3 vh-100 menu-wrapper" >
+    <h4 class="text-center mb-4">Paris Janitor BackOffice</h4>
+    <ul class="list-unstyled components flex-column">
+      <li class="nav-item  mb-3">
+        <a class="nav-link" href="/dashboard">
+          <i class="bi bi-speedometer2 me-2"></i>Tableau de bord</a>
+      </li>
 
-
-<div class="wrapper">
-  <!-- Sidebar  -->
-  <nav id="sidebar">
-    <div class="sidebar-header">
-      <h3>ParisJanitor BackOffice</h3>
-    </div>
-
-    <ul class="list-unstyled components">
-      <a href="/dashboard"> <p>Tableau de bord</p></a>
-      <li>
-        <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Utilisateurs</a>
-        <ul class="collapse list-unstyled" id="pageSubmenu">
-          <li>
-            <a href="/user-list">Liste</a>
-          </li>
-          <li>
-            <a href="/booking">Réservation</a>
-          </li>
+      <li class="nav-item mb-3">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pageSubmenu"  role="button" aria-expanded="false" >
+          <i class="bi bi-people me-2"></i>Utilisateurs</a>
+        <ul class="collapse ps-3 list-unstyled" id="pageSubmenu">
+          <li><a class="nav-link ms-2" href="/users">Liste</a></li>
+          <li><a class="nav-link ms-2" href="/booking">Réservation</a></li>
         </ul>
       </li>
       <!---->
-      <li>
-        <a href="#propertySubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Immobiliers</a>
+      <li class="nav-item  mb-3">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse"  href="#propertySubmenu" role="button" aria-expanded="false" >
+          <i class="bi bi-house me-2"></i>Immobiliers</a>
         <ul class="collapse list-unstyled" id="propertySubmenu" >
-          <li>
-            <a href="/property-adding">Nouveau</a>
-          </li>
-          <li>
-            <a href="/property-list">Liste</a>
-          </li>
-          <li>
-            <a href="#">Demande de maintenance</a>
-          </li>
-          <li>
-            <a href="#">Suivi de travaux</a>
-          </li>
-          <li>
-            <a href="#">Maintenance et réparations</a>
-          </li>
+          <li><a class="nav-link ms-2"  href="/property-adding">Nouveau</a></li>
+          <li><a class="nav-link ms-2"  href="/properties">Liste</a></li>
+          <li><a class="nav-link ms-2"  href="#">Demande de maintenance</a></li>
+          <li><a class="nav-link ms-2"  href="#">Suivi de travaux</a></li>
+          <li><a class="nav-link ms-2"  href="#">Maintenance et réparations</a></li>
         </ul>
       </li>
 
       <!---->
-      <li>
-        <a href="#docSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Documents</a>
+      <li class="nav-item  mb-3">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#docSubmenu"  role="button" aria-expanded="false" >
+          <i class="bi bi-file me-2"></i>Documents</a>
         <ul class="collapse list-unstyled" id="docSubmenu" >
-
-          <li>
-            <a href="#">Justificatifs</a>
-          </li>
-          <li>
-            <a href="#">Contrats</a>
-          </li>
-          <li>
-            <a href="#">Factures</a>
-          </li>
+          <li><a class="nav-link ms-2"  href="#">Justificatifs</a></li>
+          <li><a class="nav-link ms-2"  href="#">Contrats</a></li>
+          <li><a class="nav-link ms-2"  href="#">Factures</a></li>
         </ul>
       </li>
       <!---->
-      <li>
-        <a href="#billSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reporting et finances</a>
+      <li class="nav-item  mb-3">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#billSubmenu" role="button" aria-expanded="false" >
+          <i class="bi bi-receipt me-2"></i>Reporting et finances</a>
         <ul class="collapse list-unstyled" id="billSubmenu" >
-          <li>
-            <a href="#">Rapports financiers</a>
-          </li>
-          <li>
-            <a href="#">Etat des finances</a>
-          </li>
-          <li>
-            <a href="#">Calcul des rendements</a>
-          </li>
+          <li><a class="nav-link ms-2"  href="#">Rapports financiers</a></li>
+          <li><a class="nav-link ms-2"  href="#">Etat des finances</a></li>
+          <li><a class="nav-link ms-2"  href="#">Calcul des rendements</a></li>
         </ul>
       </li>
       <!---->
-      <li>
-        <a href="#servicesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Services</a>
+      <li class="nav-item  mb-3">
+        <a  class="nav-link dropdown-toggle" data-bs-toggle="collapse"  href="#servicesSubmenu"  role="button" aria-expanded="false" >
+          <i class="bi bi-tools me-2"></i>Services</a>
         <ul class="collapse list-unstyled" id="servicesSubmenu" >
-          <li>
-            <a href="#">Page 1</a>
-          </li>
-          <li>
-            <a href="#">Page 2</a>
-          </li>
-          <li>
-            <a href="#">Page 3</a>
-          </li>
+          <li><a class="nav-link ms-2"   href="#">Réservation</a></li>
         </ul>
       </li>
 
       <!---->
-      <li>
-        <a href="#paramSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Parametres</a>
+      <li class="nav-item  mb-3">
+        <a  class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#paramSubmenu" role="button" aria-expanded="false" >
+          <i class="bi bi-gear me-2"></i>Parametres</a>
         <ul class="collapse list-unstyled" id="paramSubmenu">
-          <li>
-            <a href="#">Profil</a>
-          </li>
-          <li>
-            <a href="#">Preference</a>
-          </li>
-          <li>
-            <a href="#">Page 3</a>
-          </li>
+          <li><a class="nav-link ms-2"   href="#">Profil</a></li>
+          <li><a class="nav-link ms-2"  href="#">Preference</a></li>
+          <li><a class="nav-link ms-2"  href="#">Tarification</a></li>
         </ul>
       </li>
 
-
-      <li>
-        <a href="#">Portfolio</a>
+      <li class="nav-item  mb-3">
+        <a  class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#profileSubmenu"  aria-expanded="false" >
+          <i class="bi bi-person me-2"></i>Profil</a>
+        <ul class="collapse list-unstyled" id="profileSubmenu">
+          <li><a class="nav-link ms-2"   href="/profile">Mes infos</a></li>
+          <li><a class="nav-link ms-2"   href="/status-change">Changer de status</a></li>
+        </ul>
       </li>
-      <li>
-        <a href="#">Contact</a>
-      </li>
+      <li><a href="#">Contact</a></li>
     </ul>
-
-    <ul class="list-unstyled CTAs">
-      <li>
-        <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-      </li>
-      <li>
-        <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-      </li>
-    </ul>
-  </nav>
-
-</div>
+    <hr>
+  </div>
+<!--</nav>-->

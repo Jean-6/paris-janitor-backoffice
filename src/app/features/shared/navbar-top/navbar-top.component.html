@@ -1,0 +1,5 @@
+<div class="d-flex align-items-center gap-3">
+  <button class="btn btn-outline-secondary btn-sm" *ngIf="authService.isLoggIn()" type="button" class="btn btn-link" (click)="onLogout()">
+    <i class="bi bi-box-arrow-right me-1"></i>Déconnexion
+  </button>
+</div>
