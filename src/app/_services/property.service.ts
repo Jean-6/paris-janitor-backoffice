@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
 import {SearchPropertyDto} from "../_dto/searchPropertyDto";
+import {Observable} from "rxjs";
+import {Property} from "../_models/Property";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropertyService {
 
-  private apiUrlPropertyData = "http://localhost:9090/api/auth/login";
-  private apiUrlImageData ="http://localhost:9090/api/auth/register";
-  //searchPropertyDto = new BehaviorSubject<SearchPropertyDto | null>(null);
+  private apiUrlPropertyData = "http://localhost:8081/api/property/";
   searchPropertyDto: SearchPropertyDto = new SearchPropertyDto();
-  selectedServices=[];
-  constructor(private _httpClient: HttpClient, private router: Router) {}
-  /*searchProperty(): Observable<SearchPropertyDto> {
 
-  }*/
+  constructor(private _httpClient: HttpClient) {}
+
+  addProperty(formData: any): Observable<any> {
+    return this._httpClient.post<any>(`${this.apiUrlPropertyData}`, formData);
+  }
+
+  retrieveProperties():Observable<Property[]>{
+    return this._httpClient.get<Property[]>(`${this.apiUrlPropertyData}`)
+  }
+
+  retrieveProperty(propertyId:string): Observable<Property>{
+    return  this._httpClient.get<Property>(`${this.apiUrlPropertyData}getBy/${propertyId}`)
+  }
+
 }

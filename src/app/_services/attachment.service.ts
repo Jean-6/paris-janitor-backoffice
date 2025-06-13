@@ -11,7 +11,7 @@ export class AttachmentService {
 
   private apiUrlAttachment ='http://localhost:8082/api/img/upload';
   private apiUrlReceipt = 'http://localhost:8082/api/receipt/1'; // URL de ton endpoint backend
-  private apiUrlImages = 'localhost:8082/api/attachment/images/';
+  private apiUrlImages = 'http://localhost:8082/api/attachment/images/';
   //private apiUrlDocuments = 'localhost:8082/api/attachment/images/';
 
 
@@ -36,6 +36,12 @@ export class AttachmentService {
 
   retrieveImages():Observable<Image[]>{
     return this.httpClient.get<Image[]>(`${this.apiUrlImages}`)
+  }
+
+
+  retrieveImage(propertyId:string): Observable<Image[]>{
+    console.log("url : "+`${this.apiUrlImages}property/${propertyId}`)
+    return  this.httpClient.get<Image[]>(`${this.apiUrlImages}property/${propertyId}`);
   }
 
 }

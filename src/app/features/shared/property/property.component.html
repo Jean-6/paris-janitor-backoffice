@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aside Menu Layout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+    </style>
+</head>
+<body>
+
+
+<div class="container-fluid">
+    <div class="row flex-nowrap ">
+        <!-- SideMenu -->
+        <nav class="col-12 col-xs-3 col-md-3 col-xl-2 px-0 bg-dark text-white sidebar">
+            <app-aside-menu></app-aside-menu>
+        </nav>
+
+
+        <main class="col-12 col-md-9 col-xl-10 ">
+            <!--TopBar-->
+            <nav class="navbar navbar-light bg-light px-3 justify-content-end shadow-sm">
+                <app-navbar-top></app-navbar-top>
+            </nav>
+
+            <!-- Content -->
+            <div class="container-fluid">
+                <div class="card border-0 shadow rounded-3">
+                    <div class="card-body">
+
+                        <form>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label class="form-label fw-bold" for="status">Status</label>
+                                    </div>
+                                    <p-multiSelect
+                                            id="status"
+                                            [(ngModel)]="userService.searchUserDto.status"
+                                            [ngModelOptions]="{standalone: true}"
+                                            defaultLabel="Sélectionner le status"
+                                            optionLabel="name"
+                                            display="chip"
+                                            styleClass="w-75 "/>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label class="form-label fw-bold" for="service">Service</label>
+                                    </div>
+                                    <p-multiSelect
+                                            id="service"
+                                            [(ngModel)]="userService.searchUserDto.service"
+                                            [ngModelOptions]="{standalone: true}"
+                                            placeholder="Sélectionner le service"
+                                            optionLabel="name"
+                                            display="chip"
+                                            styleClass="w-75"/>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label class="form-label fw-bold" for="type">Type de bien</label>
+                                    </div>
+                                    <p-multiSelect
+                                            id="type"
+                                            [options]="typeOfProperty"
+                                            [(ngModel)]=propertyService.searchPropertyDto.type
+                                            [ngModelOptions]="{standalone: true}"
+                                            placeholder="Selectionner le service"
+                                            optionLabel="name"
+                                            display="chip"
+                                            styleClass="custom-size-multiselect"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label class="form-label fw-bold" for="department">Departement</label>
+                                    </div>
+                                    <p-autoComplete
+                                            id="department"
+                                            [(ngModel)]=propertyService.searchPropertyDto.departments
+                                            [ngModelOptions]="{standalone: true}"
+                                            [suggestions]=locationService.filteredDepartment
+                                            (completeMethod)=locationService.searchDepartment($event)
+                                            field="nameAndCode"
+                                            [forceSelection]="true"
+                                    />
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label for="city" class="form-label fw-bolder">Ville</label>
+                                    </div>
+                                    <p-multiSelect
+                                            id="city"
+                                            [options]="this.locationService.cities"
+                                            [(ngModel)]="userService.searchUserDto.department"
+                                            [ngModelOptions]="{standalone: true}"
+                                            display="chip"
+                                            optionLabel="nameAndCode"
+                                            [virtualScroll]="true"
+                                            [filter]=" true"
+                                            [itemSize]="102"
+                                            [maxSelectedLabels]="3"
+                                            placeholder="Choisir des villes"
+                                            styleClass="w-75"/>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label for="arrival" class="form-label fw-bolder">Date d'arrivee</label>
+                                    </div>
+                                    <p-calendar
+                                            id="arrival"
+                                            [(ngModel)]=propertyService.searchPropertyDto.arrival
+                                            [ngModelOptions]="{standalone: true}"
+                                            dateFormat="dd.mm.yy"
+                                            [showIcon]="true"/>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label for="departure" class="form-label fw-bolder">Date de départ</label>
+                                    </div>
+                                    <p-calendar
+                                            id="departure"
+                                            [(ngModel)]=propertyService.searchPropertyDto.departure
+                                            [ngModelOptions]="{standalone: true}"
+                                            dateFormat="dd.mm.yy"
+                                            [showIcon]="true"/>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label for="areaMin" class="form-label fw-bolder">Surface Min.</label>
+                                    </div>
+                                    <p-inputNumber
+                                            id="areaMin"
+                                            [(ngModel)]=propertyService.searchPropertyDto.areaMin
+                                            [ngModelOptions]="{standalone: true}"
+                                            mode="decimal"
+                                            [showButtons]="true"
+                                            inputId="minmax-buttons"
+                                            [min]="0"
+                                            [max]="1000"
+                                            suffix=" m²"
+                                            styleClass="standard-input-size"
+                                    />
+                                </div>
+
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label for="areaMax" class="form-label fw-bolder">Surface Max.</label>
+                                    </div>
+                                    <p-inputNumber
+                                            id="areaMax"
+                                            [(ngModel)]=propertyService.searchPropertyDto.areaMin
+                                            [ngModelOptions]="{standalone: true}"
+                                            mode="decimal"
+                                            [showButtons]="true"
+                                            inputId="minmax-buttons"
+                                            [min]="0"
+                                            [max]="1000"
+                                            suffix=" m²"
+                                            styleClass="standard-input-size"
+                                    />
+                                </div>
+
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label for="BudgetMin" class="form-label fw-bolder">Budget Min.</label>
+                                    </div>
+                                    <p-inputNumber
+                                            id="budgetMin"
+                                            [(ngModel)]=propertyService.searchPropertyDto.areaMin
+                                            [ngModelOptions]="{standalone: true}"
+                                            mode="decimal"
+                                            [showButtons]="true"
+                                            inputId="minmax-buttons"
+                                            [min]="0"
+                                            [max]="1000"
+                                            suffix=" m²"
+                                            styleClass="standard-input-size"
+                                    />
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div>
+                                        <label for="BudgetMax" class="form-label fw-bolder">Budget Max.</label>
+                                    </div>
+                                    <p-inputNumber
+                                            id="budgetMax"
+                                            [(ngModel)]=propertyService.searchPropertyDto.areaMin
+                                            [ngModelOptions]="{standalone: true}"
+                                            mode="decimal"
+                                            [showButtons]="true"
+                                            inputId="minmax-buttons"
+                                            [min]="0"
+                                            [max]="1000"
+                                            suffix=" m²"
+                                            styleClass="standard-input-size"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row py-3">
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <button class="btn btn-primary " type="button">Rechercher</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid py-4">
+                <div class="card border-0 shadow rounded-3">
+                    <div class="card-body  p-sm-2">
+
+                        <div class="row d-flex justify-content-start mt-3" *ngIf="isLoading">
+                            <app-loading></app-loading>
+                        </div>
+
+                        <div class="row d-flex justify-content-start mt-3" *ngIf="propertyWithImage?.length && !isLoading">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3"
+                                 *ngFor="let property of propertyWithImage">
+                                <div class="card h-100">
+                                    <a [routerLink]="['/property-details',property.id]">
+                                        <img
+                                           *ngIf="property.image?.filename"
+                                           [src]="property.image?.filename" class="card-img-top" alt="Image de propriété" />
+                                    </a>
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">Estate</h5>
+                                        <p class="card-text flex-grow-1">Lorem ipsum dolor sit amet, consectetur
+                                            adipiscing elit. Fusce sollicitudin.</p>
+                                        <!--<a class="btn btn-primary mt-auto" [routerLink]="['/property-details']">En
+                                            savoir plus</a>-->
+                                    </div>
+                                </div>
+                            </div>
+                             <div class=" flex justify-center py-5">
+                                <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]" />
+                              </div></div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
