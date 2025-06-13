@@ -1,15 +1,22 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {AttachmentService} from "../../../_services/attachment.service";
+import {AttachmentService} from "../../../../_services/attachment.service";
 import {CalendarOptions} from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
-import {BookingService} from "../../../_services/booking.service";
+import {BookingService} from "../../../../_services/booking.service";
 import {FullCalendarComponent} from "@fullcalendar/angular";
 import frLocale from "@fullcalendar/core/locales/fr";
-import {Booking} from "../../../_models/Booking";
-import {AlertService} from "../../../_services/alert.service";
+import {Booking} from "../../../../_models/Booking";
+import {AlertService} from "../../../../_services/alert.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {forkJoin} from "rxjs";
+import {Property} from "../../../../_models/Property";
+import {Image} from "../../../../_models/Image";
+import {PropertyService} from "../../../../_services/property.service";
+import {GalleriaImage} from "../../../../_models/GalleriaImage";
+
 
 @Component({
   selector: 'app-property-details',
@@ -17,8 +24,8 @@ import {AlertService} from "../../../_services/alert.service";
   styleUrls: ['./property-details.component.css']
 })
 export class PropertyDetailsComponent implements OnInit {
-  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
+  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
   calendarOptions : CalendarOptions = {
     locale: frLocale,
     plugins:[
@@ -36,37 +43,39 @@ export class PropertyDetailsComponent implements OnInit {
     headerToolbar:{
       left: 'prev,next,today',
       center: 'title',
-      right: ''//'dayGridMonth,timeGridWeek,timeGridDay' // <-- les boutons
+      right: 'dayGridMonth,timeGridWeek,timeGridDay' // Buttons
     },
     titleFormat: { // 🔧 Forcer l'affichage correct du mois
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     },
-    slotMinTime: '08:00:00',  // Heure de début visible
-    slotMaxTime: '21:00:00',  // Heure de fin visible
-    slotDuration: '00:30:00', // Intervalles d'affichage
-    allDaySlot: false         // Désactiver la ligne "toute la journée" si inutile
   }
 
-  images: any[] =[];
+  //images: any[] =[];
   responsiveOptions: any[] = [];
   visible: boolean =false;
   loadingCalendar = false;
+  loadingPopertyWithImages = false;
   submittingOfBooking = false;
   newBookings: Booking[] = [];
   bookings: Booking[] = [];
-  selectedPropertyId: string = "670efe365795b249ec6a56a3";
+  selectedPropertyId: string = "";
+  propertyWithImages?: Property & { images: Image[] };
+  images: GalleriaImage[] = [];
 
 
   constructor(private attachmentService: AttachmentService,
               private bookingService: BookingService,
               private alert: AlertService,
-              private cdRef: ChangeDetectorRef) {
+              private cdRef: ChangeDetectorRef,
+              private route: ActivatedRoute,
+              private propertyService: PropertyService,
+              private router: Router) {
   }
 
-  ngOnInit(): void {
-    this.attachmentService.getImages().then((images) => (this.images = images));
+  ngOnInit(){
+
     this.responsiveOptions = [
       {
         breakpoint: '1024px',
@@ -81,6 +90,45 @@ export class PropertyDetailsComponent implements OnInit {
         numVisible: 1
       }
     ]
+
+    //this.attachmentService.getImages().then((images) => (this.images = images));
+    this.route.paramMap.subscribe(params =>{
+      this.selectedPropertyId = params.get('id')!;
+    })
+    this.combinePropertyDataWithImages();
+  }
+
+
+  combinePropertyDataWithImages() {
+    this.loadingPopertyWithImages = true;
+    forkJoin({
+      property: this.propertyService.retrieveProperty(this.selectedPropertyId),
+      images: this.attachmentService.retrieveImage(this.selectedPropertyId)
+    }).subscribe({
+      next: ({ property, images }: { property: Property, images: Image[] }) => {
+
+        this.propertyWithImages = {
+          ...property,
+          images: images.filter(img => img.propertyId === property.id) // ici images est bien un tableau
+        }
+        this.images = this.propertyWithImages?.images?.map(image =>({
+          itemImageSrc : image.filename,
+          thumbnailImageSrc: image.filename,
+          alt: 'Image de propriété',
+          title: 'Image',
+        })) || []
+        this.loadingPopertyWithImages = true;
+        console.log(this.propertyWithImages)
+      },
+      error: (err) => {
+        console.error('Erreur:', err);
+        this.alert.error('Error loading property with images ')
+        this.propertyWithImages =undefined;
+      },
+      complete:()=>{
+        this.loadingPopertyWithImages = false;
+      }
+    });
   }
 
   showBookingDialog() {
@@ -90,7 +138,6 @@ export class PropertyDetailsComponent implements OnInit {
   }
 
   onDialogShow(){
-
     const tryInitCalendar = () => {
       this.cdRef.detectChanges();
       if (this.calendarComponent) {
@@ -123,19 +170,19 @@ export class PropertyDetailsComponent implements OnInit {
     }
     /*Disable bookings on two dates passed*/
     if(start < now){
-      this.alert.warn("Impossible de réserver uen date antérieure");
+      this.alert.warn("Impossible de réserver une date antérieure");
       return;
     }
     /*Disable overlap between two bookings*/
-    const overlap = this.bookings.some( b =>
+    const overlap = this.bookings?.some( b =>
       (start < new Date( b.endDate) && end > new Date(b.startDate))
     );
     if(overlap){
-      this.alert.warn("Cette plage chevauce une réservation existante")
+      this.alert.warn("Cette plage chevauche une réservation existante")
       return;
     }
 
-    const exists = this.bookings.some(b => b.startDate === booking.startDate && b.endDate === booking.endDate);
+    const exists = this.bookings?.some(b => b.startDate === booking.startDate && b.endDate === booking.endDate);
     if(exists) return ;
 
     this.newBookings.push(booking);
@@ -175,9 +222,7 @@ export class PropertyDetailsComponent implements OnInit {
   submitBooking() {
 
     if(this.newBookings.length === 0) return;
-
     this.submittingOfBooking = true
-
     this.bookingService.createBookings(this.bookings).subscribe({
       next: () => {
         this.submittingOfBooking = true;
@@ -196,15 +241,16 @@ export class PropertyDetailsComponent implements OnInit {
   }
 
   loadExistingBookings(){
+    console.log("id : "+ this.selectedPropertyId)
     this.bookingService.getBookingsByProperty(this.selectedPropertyId).subscribe({
       next: (bookings: Booking[]) => {
 
-        this.bookings = bookings;
+        this.bookings = bookings ?? [];
         const calendarApi = this.calendarComponent.getApi();
 
         calendarApi.removeAllEvents();
 
-        bookings.forEach(b => {
+        bookings?.forEach(b => {
 
           console.log("Ajout réservation dans calendrier :", b);
 
