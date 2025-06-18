@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {MenuItem} from "primeng/api";
-import {AlertService} from "../../../../_services/alert.service";
+import {AlertService} from "../../../_services/alert.service";
 
 @Component({
   selector: 'app-upload-receipt',

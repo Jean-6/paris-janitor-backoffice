@@ -1,8 +1,8 @@
-
+/*
 .input-normal {
   font-size: 1rem;
   height: 2.5rem;
-}
+}*/
 
 /*
 .input-normal {
@@ -14,7 +14,7 @@
 
 
 /* p-autocomplete style*/
-::ng-deep p-autoComplete input {
+/*::ng-deep p-autoComplete input {
   height: 38px;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -26,4 +26,4 @@
   max-width: 300px;
   min-width: 300px;
 }
-
+*/

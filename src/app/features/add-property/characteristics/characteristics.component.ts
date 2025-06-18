@@ -9,11 +9,11 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {MenuItem, MessageService} from "primeng/api";
-import {City} from "../../../../_dto/city";
+import {City} from "../../../_dto/city";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../../../_services/auth.service";
-import {AlertService} from "../../../../_services/alert.service";
-import {LocationService} from "../../../../_services/location.service";
+import {AuthService} from "../../../_services/auth.service";
+import {AlertService} from "../../../_services/alert.service";
+import {LocationService} from "../../../_services/location.service";
 
 @Component({
   selector: 'app-characteristics',

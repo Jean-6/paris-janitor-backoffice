@@ -2,9 +2,9 @@ import {Component, Output, EventEmitter} from '@angular/core';
 import {Router} from "@angular/router";
 import {MenuItem, MessageService} from "primeng/api";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {AttachmentService} from "../../../../_services/attachment.service";
-import {AlertService} from "../../../../_services/alert.service";
-import {PropertyService} from "../../../../_services/property.service";
+import {AttachmentService} from "../../../_services/attachment.service";
+import {AlertService} from "../../../_services/alert.service";
+import {PropertyService} from "../../../_services/property.service";
 
 @Component({
   selector: 'app-upload-image',

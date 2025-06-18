@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {AsideMenuComponent} from "./aside-menu/aside-menu.component";
 import {LoadingComponent} from "./loading/loading.component";
 import {NavbarTopComponent} from "./navbar-top/navbar-top.component";
@@ -17,17 +17,20 @@ import {TagModule} from "primeng/tag";
 import {InputNumberModule} from "primeng/inputnumber";
 import {PaginatorModule} from "primeng/paginator";
 import {RouterLink} from "@angular/router";
-
+import {PropertyDetailsComponent} from "./property/property-details/property-details.component";
+import {GalleriaModule} from "primeng/galleria";
+import {FullCalendarModule} from "@fullcalendar/angular";
 
 
 @NgModule({
-  declarations: [
-    AsideMenuComponent,
-    LoadingComponent,
-    NavbarTopComponent,
-    ProfileComponent,
-    PropertyComponent
-  ],
+    declarations: [
+        AsideMenuComponent,
+        LoadingComponent,
+        NavbarTopComponent,
+        ProfileComponent,
+        PropertyComponent,
+        PropertyDetailsComponent
+    ],
   imports: [
     CommonModule,
     ProgressSpinnerModule,
@@ -42,13 +45,15 @@ import {RouterLink} from "@angular/router";
     FormsModule,
     InputNumberModule,
     PaginatorModule,
-    RouterLink
+    RouterLink,
+    GalleriaModule,
+    FullCalendarModule
   ],
-  exports:[
-    AsideMenuComponent,
-    LoadingComponent,
-    NavbarTopComponent
-
-  ]
+    exports: [
+        AsideMenuComponent,
+        LoadingComponent,
+        NavbarTopComponent
+    ]
 })
-export class SharedModule { }
+export class SharedModule {
+}

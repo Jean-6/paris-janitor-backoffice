@@ -13,7 +13,7 @@
        <!--Preview-->
         <div class="preview-container">
           <div class="preview-card" *ngFor="let image of imagePreviews;let i = index">
-            <img  [src]="image">
+            <img  [src]="image" alt="">
             <button class="delete-btn" (click)="removeImage(i)">×</button>
           </div>
         </div>
