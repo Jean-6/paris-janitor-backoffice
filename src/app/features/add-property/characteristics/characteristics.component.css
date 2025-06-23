@@ -1,29 +1,27 @@
-/*
-.input-normal {
-  font-size: 1rem;
-  height: 2.5rem;
-}*/
 
-/*
-.input-normal {
+.wide-input {
   width: 100%;
-  max-width: 300px;
-  padding: 0.5rem;
+  max-width: 400px;
 }
- */
 
 
-/* p-autocomplete style*/
-/*::ng-deep p-autoComplete input {
-  height: 38px;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 0.25rem;
-
-  width: 100%;
-  max-width: 300px;
-  min-width: 300px;
+::ng-deep .custom-autocomplete .p-autocomplete {
+  width: 100% !important;
+  max-width: 400px;
 }
-*/
+
+::ng-deep .custom-autocomplete .p-autocomplete-input {
+  width: 100% !important;
+}
+
+
+
+::ng-deep .custom-input-number .p-inputnumber-input {
+  width: 100% !important;
+  max-width: 200px;
+}
+
+::ng-deep .custom-input-number .p-inputnumber-input {
+  width: 100% !important;
+}
+

@@ -14,6 +14,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../_services/auth.service";
 import {AlertService} from "../../../_services/alert.service";
 import {LocationService} from "../../../_services/location.service";
+import {PropertyType} from "../../../_models/PropertyType";
 
 @Component({
   selector: 'app-characteristics',
@@ -26,6 +27,7 @@ export class CharacteristicsComponent implements OnInit ,OnChanges{
   items: MenuItem[] = [];
   cities:City[] = [] ;
   filteredCities:City[]=[];
+  propertyType : PropertyType[] = [];
 
   @Input() formData: any = {
     type: '',
@@ -63,6 +65,14 @@ export class CharacteristicsComponent implements OnInit ,OnChanges{
               protected locationService: LocationService) {}
 
   ngOnInit(): void {
+
+    this.propertyType = [
+      {name: '', code: ''},
+      {name: 'Appartement', code: 'Appartment'},
+      {name: 'Maison', code: 'Home'},
+      {name: 'Studio', code: 'Studio'},
+    ]
+
     this.locationService.loadCities1().subscribe({
       next:(data)=> this.cities =data
     }); // S'assurer que les villes sont chargées
