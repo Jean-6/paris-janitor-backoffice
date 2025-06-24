@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +10,6 @@
   </style>
 </head>
 <body>
-
 
 
 <div class="container-fluid">
@@ -28,6 +25,13 @@
       <nav class="navbar navbar-light bg-light px-3 justify-content-end shadow-sm">
         <app-navbar-top></app-navbar-top>
       </nav>
+      <div class="container-fluid">
+        <div class="card border-0">
+          <div class="card-body">
+            <h2 class="title-page">Ajouter une nouvelle annonce</h2>
+          </div>
+        </div>
+      </div>
 
       <!-- Content -->
       <div class="container-fluid">
@@ -49,14 +53,22 @@
                 (next)="nextStep()"/>
               <app-upload-image
                 *ngSwitchCase="1"
-                (formDataUpdated) = "updateFormData('pictures',$event)"
-                (next) = "nextStep()"
-                (back) = "prevStep()"/>
+                (formDataUpdated)="updateFormData('pictures',$event)"
+                (next)="nextStep()"
+                (back)="prevStep()"/>
               <app-upload-receipt
                 *ngSwitchCase="2"
-                (formDataUpdated) = "updateFormData('documents',$event)"
-                (next) = "nextStep()"
-                (back) = "prevStep()"/>
+                (formDataUpdated)="updateFormData('documents',$event)"
+                (next)="nextStep()"
+                (back)="prevStep()"/>
+
+              <app-validation-step
+                *ngSwitchCase="3"
+                (formDataUpdated)="updateFormData('',$event)"
+                (next)="nextStep()"
+                (back)="prevStep()"
+              />
+
             </ng-container>
 
           </div>

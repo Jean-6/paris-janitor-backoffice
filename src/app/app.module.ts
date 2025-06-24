@@ -27,37 +27,20 @@ import {PanelModule} from "primeng/panel";
 import {StepsModule} from "primeng/steps";
 import {ToolbarModule} from "primeng/toolbar";
 import {InputTextareaModule} from "primeng/inputtextarea";
-/*import { ConfirmationComponent } from './features/property/add-property/confirmation/confirmation.component';*/
 import {CardModule} from "primeng/card";
-//import { PropertyListComponent } from './features/shared/property-list/property-list.component';
-//import { PropertyDetailsComponent } from './features/shared/property-details/property-details.component';
 import {GalleriaModule} from "primeng/galleria";
 import {FullCalendarModule} from "@fullcalendar/angular";
 import {PaginatorModule} from "primeng/paginator";
-import {ProfileComponent} from './features/shared/profile/profile.component';
-//import { StatusChangeComponent } from './features/status-change/status-change.component';
-import {
-  BusinessInformationComponent
-} from './features/status-change/business-information/business-information.component';
-import {
-  AreaOfInterventionComponent
-} from './features/status-change/area-of-intervention/area-of-intervention.component';
-import {ServicesComponent} from './features/status-change/services/services.component';
-import {AvailabilitiesComponent} from './features/status-change/availabilities/availabilities.component';
 import {PickListModule} from "primeng/picklist";
-import {
-  UploadProviderReceiptComponent
-} from './features/status-change/upload-provider-receipt/upload-provider-receipt.component';
-import {ValidationStepComponent} from './features/status-change/validation-step/validation-step.component';
 import {BasicAuthInterceptor} from "./_interceptors/basic-auth.interceptor";
 import {AppComponent} from "./app.component";
 import {LoginComponent} from "./login/login.component";
 import {DashboardComponent} from "./features/dashboard/dashboard.component";
 import {UserComponent} from "./features/user/user.component";
-import {StatusChangeComponent} from "./features/status-change/status-change.component";
 import {CommonModule} from "@angular/common";
 import {SharedModule} from './features/shared/shared.module';
 import {AddPropertyModule} from "./features/add-property/add-property.module";
+import {StatusChangeModule} from "./features/status-change/status-change.module";
 
 @NgModule({
   declarations: [
@@ -68,17 +51,11 @@ import {AddPropertyModule} from "./features/add-property/add-property.module";
     ForgotPasswordComponent,
     ResetPasswordComponent,
     UserComponent,
-    StatusChangeComponent,
-    BusinessInformationComponent,
-    AreaOfInterventionComponent,
-    ServicesComponent,
-    AvailabilitiesComponent,
-    UploadProviderReceiptComponent,
-    ValidationStepComponent
   ],
   imports: [
     AddPropertyModule,
     SharedModule,
+    StatusChangeModule,
     CommonModule,
     BrowserModule,
     AppRoutingModule,
@@ -118,7 +95,9 @@ import {AddPropertyModule} from "./features/add-property/add-property.module";
     //multi: true,
     //}
   ],
-  exports: [],
+  exports: [
+    //ValidationStepComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

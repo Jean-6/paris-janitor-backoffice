@@ -6,7 +6,7 @@ import {UploadReceiptComponent} from "./upload-receipt/upload-receipt.component"
 import {InputSwitchModule} from "primeng/inputswitch";
 import {InputNumberModule} from "primeng/inputnumber";
 import {AutoCompleteModule} from "primeng/autocomplete";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {PanelModule} from "primeng/panel";
 import {InputTextModule} from "primeng/inputtext";
@@ -15,16 +15,18 @@ import {MessageService} from "primeng/api";
 import {AddPropertyComponent} from "./add-property.component";
 import {StepsModule} from "primeng/steps";
 import {SharedModule} from "../shared/shared.module";
+import {StyleClassModule} from "primeng/styleclass";
+import {KeyFilterModule} from "primeng/keyfilter";
+import {DropdownModule} from "primeng/dropdown";
+import { ValidationStepComponent } from './validation-step/validation-step.component';
 
 @NgModule({
   declarations: [
-    //AsideMenuComponent,
-    //LoadingComponent,
-    //NavbarTopComponent,
     AddPropertyComponent,
     CharacteristicsComponent,
     UploadImageComponent,
     UploadReceiptComponent,
+    ValidationStepComponent,
 
   ],
   imports: [
@@ -39,6 +41,10 @@ import {SharedModule} from "../shared/shared.module";
     InputTextModule,
     StepsModule,
     SharedModule,
+    FormsModule,
+    StyleClassModule,
+    KeyFilterModule,
+    DropdownModule,
   ],
   providers: [ MessageService ]
 })

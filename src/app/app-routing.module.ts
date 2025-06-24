@@ -6,13 +6,15 @@ import {SignupComponent} from "./signup/signup.component";
 import {AuthGuard} from "./_guards/auth.guard";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
-import {PropertyComponent} from "./features/property/property.component";
-import {AddPropertyComponent} from "./features/property/add-property/add-property.component";
 import {UserComponent} from "./features/user/user.component";
-import {UploadImageComponent} from "./features/property/add-property/upload-image/upload-image.component";
-import {UploadReceiptComponent} from "./features/property/add-property/upload-receipt/upload-receipt.component";
-import {CharacteristicsComponent} from "./features/property/add-property/characteristics/characteristics.component";
-import {PropertyDetailsComponent} from "./features/shared/property-details/property-details.component";
+import {ProfileComponent} from "./features/shared/profile/profile.component";
+import {StatusChangeComponent} from "./features/status-change/status-change.component";
+import {UploadProviderReceiptComponent} from "./features/status-change/upload-provider-receipt/upload-provider-receipt.component";
+import {PropertyComponent} from "./features/shared/property/property.component";
+import {PropertyDetailsComponent} from "./features/shared/property/property-details/property-details.component";
+import {AddPropertyComponent} from "./features/add-property/add-property.component";
+import {CharacteristicsComponent} from "./features/add-property/characteristics/characteristics.component";
+import {UploadImageComponent} from "./features/add-property/upload-image/upload-image.component";
 
 const routes: Routes = [
   {
@@ -42,12 +44,14 @@ const routes: Routes = [
     //canActivateChild: [AuthGuard]
   },
   {path : 'users', component:UserComponent},
+  {path : 'profile', component:ProfileComponent},
+  {path : 'status-change', component:StatusChangeComponent},
   {path : 'properties', component:PropertyComponent},
-  {path : 'property-details', component:PropertyDetailsComponent},
+  {path : 'property-details/:id', component:PropertyDetailsComponent},
   {path : 'property-adding', component:AddPropertyComponent},
   {path : 'characteristics', component:CharacteristicsComponent},
   {path : 'upload-images', component:UploadImageComponent},
-  {path : 'upload-receipts', component:UploadReceiptComponent},
+  {path : 'upload-provider-receipts', component:UploadProviderReceiptComponent},
 
 ];
 

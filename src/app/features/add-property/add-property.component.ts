@@ -16,7 +16,7 @@ export class AddPropertyComponent implements OnInit{
   @Input() activeIndex: number = 0;
   @Output() activeIndexChange = new EventEmitter<number>();
 
-  formData: any = { //Stock datas for each step
+  multiFormData: any = { //Stock datas for each step
     information: {},
     images: {},
     documents:{},
@@ -43,7 +43,7 @@ export class AddPropertyComponent implements OnInit{
         command: (event: any) => this.messageService.add({severity:'info', summary:'Third Step', detail: event.item.label})
       },
       {
-        label: 'Confirmation',
+        label: 'Etape de validation',
         command: (event: any) => this.messageService.add({severity:'info', summary:'Last Step', detail: event.item.label})
       }
     ];
@@ -63,7 +63,7 @@ export class AddPropertyComponent implements OnInit{
   }
 
   updateFormData(step: string, data: any){
-    this.formData[step] = data;
+    this.multiFormData[step] = data;
   }
 
   onActiveIndexChange(index: number) {

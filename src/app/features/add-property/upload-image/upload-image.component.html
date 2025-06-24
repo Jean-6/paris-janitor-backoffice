@@ -4,12 +4,10 @@
       <div>
       <p-panel header="Charger les images du bien" [toggleable]="true" class="col">
         <div class="mb-3">
-          <label for="formFile" class="form-label">Default file input example</label>
+          <label for="formFile" class="form-label fw-bolder">Selectionner les fichiers au format image</label>
           <input class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" multiple id="formFile" (change)="onFileSelected($event)">
         </div>
-        <!--<div class="card">
-          <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
-        </div>-->
+
        <!--Preview-->
         <div class="preview-container">
           <div class="preview-card" *ngFor="let image of imagePreviews;let i = index">

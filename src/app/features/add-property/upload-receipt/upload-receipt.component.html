@@ -7,11 +7,14 @@
         <fieldset>
           <legend></legend>
           <label for="identityDoc">Choisissez un fichier PDF :</label><br>
-          <input class="form-control" type="file" name="identityDoc" accept="application/pdf" id="identityDoc" multiple (change)="onFileSelected($event)" required>
+          <input class="form-control" type="file" name="identityDoc" accept="application/pdf" id="identityDoc" multiple (change)="onFileSelected($event,'identityDoc')" required>
         </fieldset>
-        <div *ngIf="selectedDocs.length > 0 " class="mt-2">
-          <ul style="list-style-type: none">
-            <li *ngFor="let file of selectedDocs">{{file.name}}</li>
+        <div *ngIf="identityDocs.length > 0 " class="mt-2">
+          <ul class="no-indent">
+            <li *ngFor="let file of identityDocs; let i = index">
+              <span class="fw-bolder">{{file.name}}</span>
+              <button type="button" class="btn btn-link btn-sm text-danger" (click)="removeFile(i, 'otherDocument')">Supprimer</button>
+            </li>
           </ul>
         </div>
       </p-panel>
@@ -19,25 +22,52 @@
         <fieldset>
           <legend></legend>
           <label for="technicalDiagnostic">Choisissez un fichier PDF :</label><br>
-          <input class="form-control" type="file" name="file" accept="application/pdf" id="technicalDiagnostic" multiple (change)="onFileSelected($event)" required>
+          <input class="form-control" type="file" name="file" accept="application/pdf" id="technicalDiagnostic" multiple (change)="onFileSelected($event,'technicalDiagnostic')" required>
         </fieldset>
+        <div *ngIf="technicalDiagnostic.length > 0 " class="mt-2">
+          <ul class="no-indent">
+            <li *ngFor="let file of technicalDiagnostic; let i = index">
+              <span class="fw-bolder">{{file.name}}</span>
+              <button type="button" class="btn btn-link btn-sm text-danger" (click)="removeFile(i, 'technicalDiagnostic')">Supprimer</button>
+
+            </li>
+          </ul>
+        </div>
       </p-panel>
     </div>
     <div class="d-flex gap-2 my-3 ">
       <p-panel header="Titre de propriété" [toggleable]="true" class="col-md-6">
         <fieldset>
           <legend></legend>
-          <label for="titleOfOwnership">Choisissez un fichier PDF :</label><br>
-          <input class="form-control" type="file" name="file" accept="application/pdf" id="titleOfOwnership" multiple (change)="onFileSelected($event)" required>
+          <label for="propertyTitle">Choisissez un fichier PDF :</label><br>
+          <input class="form-control" type="file" name="file" accept="application/pdf" id="propertyTitle" multiple (change)="onFileSelected($event,'propertyTitle')" required>
         </fieldset>
+        <div *ngIf="propertyTitle.length > 0 " class="mt-2">
+          <ul class="no-indent">
+            <li *ngFor="let file of propertyTitle; let i  = index">
+              <span class="fw-bolder">{{file.name}}</span>
+              <button type="button" class="btn btn-link btn-sm text-danger" (click)="removeFile(i, 'propertyTitle')">Supprimer</button>
+
+            </li>
+          </ul>
+        </div>
 
       </p-panel>
       <p-panel header="Autres documents" [toggleable]="true" class="col-md-6">
         <fieldset>
           <legend></legend>
           <label for="otherDocument">Choisissez un fichier PDF :</label><br>
-          <input class="form-control" type="file" name="file" accept="application/pdf" id="otherDocument" multiple (change)="onFileSelected($event)" required>
+          <input class="form-control" type="file" name="file" accept="application/pdf" id="otherDocument" multiple (change)="onFileSelected($event,'otherDocument')" required>
         </fieldset>
+        <div *ngIf="otherDocument.length > 0 " class="mt-2">
+          <ul class="no-indent" >
+            <li *ngFor="let file of otherDocument; let i = index">
+              <span class="fw-bolder">{{file.name}}</span>
+              <button type="button" class="btn btn-link btn-sm text-danger" (click)="removeFile(i, 'otherDocument')">Supprimer</button>
+            </li>
+
+          </ul>
+        </div>
       </p-panel>
     </div>
 
