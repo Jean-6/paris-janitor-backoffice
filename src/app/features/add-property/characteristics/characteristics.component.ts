@@ -1,7 +1,6 @@
 import {
   Component,
   EventEmitter,
-  inject,
   Input,
   OnChanges,
   OnInit,
@@ -11,10 +10,10 @@ import {
 import {MenuItem, MessageService} from "primeng/api";
 import {City} from "../../../_dto/city";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../../_services/auth.service";
 import {AlertService} from "../../../_services/alert.service";
 import {LocationService} from "../../../_services/location.service";
 import {PropertyType} from "../../../_models/PropertyType";
+import {Characteristics} from "../../../_models/Characteristics";
 
 @Component({
   selector: 'app-characteristics',
@@ -29,14 +28,14 @@ export class CharacteristicsComponent implements OnInit ,OnChanges{
   filteredCities:City[]=[];
   propertyType : PropertyType[] = [];
 
-  @Input() formData: any = {
+  @Input() propertyFormData: Characteristics = {
     type: '',
     address: '',
     city: '',
-    area: '',
-    peaces: '',
-    rooms: '',
-    bathrooms: '',
+    area: 0,
+    peaces: 0,
+    rooms: 0,
+    bathrooms: 0,
     isFurnished: false,
     wifi: false,
     airConditioning: false,
@@ -46,18 +45,16 @@ export class CharacteristicsComponent implements OnInit ,OnChanges{
     rent: 0,
     description: '',
     ownerId:'',
-    images: [],
-    documents: []
+
   };
 
   // Parent data
   @Output() formDataUpdated = new EventEmitter<any>();  // Transmitter to change data
   @Output() next = new EventEmitter<void>(); // Transmitter to change steps
-  @Input() activeIndex: number = 0;
   @Output() activeIndexChange = new EventEmitter<number>();
-  form!: FormGroup;
+  @Input() activeIndex: number = 0;
 
-  authService=inject(AuthService);
+  form!: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private alert: AlertService,
@@ -73,32 +70,38 @@ export class CharacteristicsComponent implements OnInit ,OnChanges{
       {name: 'Studio', code: 'Studio'},
     ]
 
+
+
     this.locationService.loadCities1().subscribe({
       next:(data)=> this.cities =data
     }); // S'assurer que les villes sont chargées
-    this.form = this.formBuilder.group({
-      type: [this.formData.type || '', [/*Validators.required,this.validateTypeOf('string','invalidateType')*/]],
-      address: [this.formData.address || '', [/*Validators.required,this.validateTypeOf('string','invalidateAddress')*/]] ,
-      city: [this.formData.city || '', [/*Validators.required,this.validateTypeOf('object','invalidateCity')*/]],
-      area:[this.formData.area || '', [/*Validators.required,this.validateInputNumber.bind(this)*/]] ,
-      peaces:[this.formData.peaces || '', [/*Validators.required/*,this.validateInputNumber.bind(this)*/]] ,
-      rooms:[this.formData.room || ''] ,
-      bathrooms:[this.formData.peaces || '', [/*Validators.required,this.validateInputNumber.bind(this)*/]] ,
-      isFurnished:[this.formData.isFurnished],
-      wifi:[this.formData.wifi],
-      airConditioning: [this.formData.airConditioning],
-      equippedKitchen: [this.formData.equippedKitchen],
-      garage: [this.formData.garage],
-      outdoorSpaces: [this.formData.outdoorSpaces],
-      rent: [this.formData.rent],
-      images: [''],
-      documents: [''],
-      description: [this.formData.description || '', [/*Validators.required,this.validateTypeOf('string','invalidateDescription',10)*/]],
-    });
-
-
     this.locationService.citiesSubject.subscribe(data=>this.cities=data)
-    console.log("characterics : "+this.cities)
+
+    this.initForm();
+  }
+
+  private initForm(): void {
+
+    this.form = this.formBuilder.group({
+      characteristics: this.formBuilder.group({
+        type: [this.propertyFormData?.type || '', [/*Validators.required,this.validateTypeOf('string','invalidateType')*/]],
+        address: [this.propertyFormData?.address || '', [/*Validators.required,this.validateTypeOf('string','invalidateAddress')*/]] ,
+        city: [this.propertyFormData?.city || '', [/*Validators.required,this.validateTypeOf('object','invalidateCity')*/]],
+        area:[this.propertyFormData?.area || '', [/*Validators.required,this.validateInputNumber.bind(this)*/]] ,
+        peaces:[this.propertyFormData?.peaces || '', [/*Validators.required/*,this.validateInputNumber.bind(this)*/]] ,
+        rooms:[this.propertyFormData?.rooms || ''] ,
+        bathrooms:[this.propertyFormData?.bathrooms || '', [/*Validators.required,this.validateInputNumber.bind(this)*/]] ,
+        isFurnished:[this.propertyFormData?.isFurnished],
+        wifi:[this.propertyFormData?.wifi],
+        airConditioning: [this.propertyFormData?.airConditioning],
+        equippedKitchen: [this.propertyFormData?.equippedKitchen],
+        garage: [this.propertyFormData?.garage],
+        outdoorSpaces: [this.propertyFormData?.outdoorSpaces],
+        rent: [this.propertyFormData?.rent],
+        description: [this.propertyFormData.description || '', [/*Validators.required,this.validateTypeOf('string','invalidateDescription',10)*/]],
+      })
+     });
+
   }
 
   validateTypeOf = (expectedType: string, errorKey: string, minLength: number = 0 ) => {
@@ -124,34 +127,32 @@ export class CharacteristicsComponent implements OnInit ,OnChanges{
 
   onNext() {
     if(this.form.valid){
-      ///console.log(this.form.value);
+      const propertyCharacteristics = this.form.get('characteristics')?.value;
+      this.formDataUpdated?.emit(propertyCharacteristics);
       this.activeIndex++;
       this.activeIndexChange.emit(this.activeIndex);
-      this.formDataUpdated?.emit(this.form.value);
       this.next.emit();
-
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['formData'] && this.form) {
-      this.form.patchValue(this.formData);
+    }else{
+      this.alert.warn("Veuillez renseigner tous les champs")
     }
   }
 
   filterCity(event:any) {
     let filtered: City[]  = [];
     let query =  event.query;
-    console.log("test :"+query.toLowerCase());
-    console.log(this.cities.length)
     this.cities.forEach((city,index)=>{
-      console.log(city)
       if(this.cities[index].nom.toLowerCase().includes(query.toLowerCase()) ||
         this.cities[index].nameAndPostCode.toLowerCase().includes(query.toLowerCase())){
-        console.log(city)
         filtered.push(city)
       }
     });
     this.filteredCities = filtered;
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['propertyFormData'] && changes['propertyFormData'].currentValue) {
+      this.initForm()
+    }
   }
 }
