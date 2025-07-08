@@ -1,11 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../_services/auth.service";
 import {LoginResponse} from "../_dto/loginResponse";
 import {catchError, Subject, takeUntil} from "rxjs";
 import {AlertService} from "../_services/alert.service";
 import {LoginRequest} from "../_dto/loginRequest";
+import {SharedModule} from "../features/shared/shared.module";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-login',
@@ -14,9 +16,10 @@ import {LoginRequest} from "../_dto/loginRequest";
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  authResponse: LoginResponse | null = null;
+  loginResponse: LoginResponse | null = null;
   myForm!: FormGroup;
   private destroy$: Subject<void> = new Subject<void>();
+
 
   constructor(private formBuilder: FormBuilder,
               protected authService: AuthService,
@@ -45,12 +48,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$) // Cancel observable during destroying component
     ).subscribe({
       next: (res:any) => {
-        this.authResponse = res;
+        this.loginResponse = res;
         this.authService.setIsAuthenticated(true);
         this.router.navigate(['/dashboard']);
         this.alert.success('Connexion réussie');
       },
       error: (err:any) => {
+        this.authService.isLoading = true;
         this.router.navigate(['/login']);
         this.alert.error('Connexion échouée');
         console.error(`Erreur de connexion: `, err);
