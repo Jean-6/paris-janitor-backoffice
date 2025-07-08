@@ -1,60 +1,80 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {LoginResponseDto} from "../_dto/loginResponseDto";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../_services/auth.service";
 import {Router} from "@angular/router";
 import {catchError, map, Subject, takeUntil, throwError} from "rxjs";
 import {AlertService} from "../_services/alert.service";
-import {RegisterRequestDto} from "../_dto/registerRequestDto";
+import {RegisterRequest} from "../_dto/registerRequest";
+import {RegisterResponse} from "../_dto/registerResponse";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit,OnDestroy{
+export class SignupComponent implements OnInit, OnDestroy {
 
 
-  authResponse: LoginResponseDto | null = null;
+  registerResponse: RegisterResponse | null = null;
   private destroy$: Subject<void> = new Subject<void>();
   myForm!: FormGroup;
 
 
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService,
+              protected authService: AuthService,
               private router: Router,
-              private alertService: AlertService) {
+              private alert: AlertService) {
   }
 
   ngOnInit() {
 
     this.myForm = this.formBuilder.group({
-      firstname: ['',Validators.required],
-      lastname: ['',Validators.required],
-      email: ['',Validators.required],
-      password: ['',Validators.required],
+      username: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
     });
-
   }
 
 
   onSubmit() {
+    this.authService.isLoading = true;
+    const registerRequest: RegisterRequest = {
+      profileInfo: {
+        username: this.myForm.value.username,
+        role: 'USER',
+        address: {
+          street: '',
+          city: '',
+          zip: ''
+        },
+      },
+      privateInfo: {
+        email: this.myForm.value.email,
+        password: this.myForm.value.password
+      }
 
-  const registerRequest: RegisterRequestDto = this.myForm.value;
+    }
+    console.log(registerRequest)
     this.authService.register(registerRequest).pipe(
-      map(data => data.authResponse),
       catchError(error => {
-        this.alertService.error('Une erreur est survenue')
+        this.alert.error('Une erreur est survenue')
         return throwError(() => error)
       }),
       takeUntil(this.destroy$)
     ).subscribe({
       next: (res) => {
-        this.authResponse = res;
-        console.log(this.authResponse);
+        this.registerResponse = res;
+        console.log(this.registerResponse);
         this.router.navigate(['/dashboard']);
+        this.alert.success('Ouverture de compte réussie');
       }, error: (err) => {
-        console.error(`Erreur de connexion`, err);
+        this.authService.isLoading = true;
+        this.router.navigate(['/login']);
+        this.alert.error('Inscription échouée');
+        console.error(`Erreur lors de l'inscription: `, err);
+      },
+      complete: () => {
+        this.authService.isLoading=false;
       }
 
     });

@@ -1,13 +1,15 @@
 import {Injectable/*, signal, Signal*/} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable, tap} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, tap, throwError} from "rxjs";
 import {User} from "../_models/User";
-import {LoginResponse} from "../_dto/loginResponse";
-import {Router} from "@angular/router";
-import {RegisterRequestDto} from "../_dto/registerRequestDto";
-import {LoginRequest} from "../_dto/loginRequest";
+import {RegisterRequest} from "../_dto/registerRequest";
 
-import { environment } from "../../environments/environment";
+import {environment} from "../../environments/environment";
+import {LoginRequest} from "../_dto/loginRequest";
+import {LoginResponse} from "../_dto/loginResponse";
+import {ResponseWrapper} from "../_dto/responseWrapper";
+import {RegisterResponse} from "../_dto/registerResponse";
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +17,10 @@ import { environment } from "../../environments/environment";
 
 export class AuthService {
 
-  private login_ = "/auth/login";
-  private apiUrlRegister ="/auth/register";
-  private logout_ ="/auth/logout";
-  private apiUrlRefreshToken ="/auth/refresh-token";
+  private urlLogin_ = "/auth/login";
+  private urlRegister_ = "/auth/register";
+  private logout_ = "/auth/logout";
+  private apiUrlRefreshToken = "/auth/refresh-token";
   isLoading = false;
 
 
@@ -26,7 +28,18 @@ export class AuthService {
   currentUser = this._currentUser.asObservable();
   private isAuthenticated = new BehaviorSubject<boolean>(false);
 
-  constructor(private _httpClient: HttpClient, private router: Router) {}
+  constructor(private _httpClient: HttpClient) {
+  }
+
+  getAccessToken(): string | null {
+    return localStorage.getItem("accessToken");
+
+  }
+
+  getRefreshToken(): string | null {
+    return localStorage.getItem("refreshToken");
+  }
+
 
   getIsAuthenticated(): Observable<boolean> {
     return this.isAuthenticated.asObservable();
@@ -37,27 +50,44 @@ export class AuthService {
   }
 
 
-  login(loginRequest: LoginRequest): Observable<{loginResponse: LoginResponse}> {
-    console.log(`${environment.apiUrl}${this.login_}`)
-    return this._httpClient.post<{loginResponse : LoginResponse}>(`${environment.apiUrl}${this.login_}`,
+  login(loginRequest: LoginRequest): Observable<LoginResponse> {
+    return this._httpClient.post<ResponseWrapper<LoginResponse>>(`${environment.apiUrl}${this.urlLogin_}`,
       loginRequest,
-      { withCredentials: true })
-      .pipe(
-        tap((response:any) => {
-          localStorage.setItem('token', response.accessToken);
-        })
-      );
+      {withCredentials: true}).pipe(
+      tap((response: ResponseWrapper<LoginResponse>) => {
+        if (response.data.accessToken != null) {
+          localStorage.setItem('accessToken', response.data.accessToken);
+        }
+      }),
+      map(response => response.data),
+      catchError(error => {
+        console.error("Error when login :", error);
+        return throwError(()=> new Error('Error when login'));
+
+      })
+    );
   }
 
-  register(registerRequest: RegisterRequestDto){
-    return this._httpClient.post<{authResponse : LoginResponse}>(`${this.apiUrlRegister}`,
-      registerRequest ,
-      { withCredentials: true });
+  register(registerRequest: RegisterRequest): Observable<RegisterResponse> {
+    return this._httpClient.post<ResponseWrapper<RegisterResponse>>(`${environment.apiUrl}${this.urlRegister_}`,
+      registerRequest,
+      {withCredentials: true}).pipe(
+      tap((response: ResponseWrapper<RegisterResponse>) => {
+        if(response.data.accessToken!=null){
+          localStorage.setItem('accessToken',response.data.accessToken);
+        }
+      }),
+      map(response => response.data),
+      catchError(error =>{
+        console.error("Error when registration", error);
+        return throwError(()=> new Error('Error when registration'));
+      })
+    );
   }
 
 
-  refreshToken(): Observable<any>{
-    return  this._httpClient.post<any>(`${this.apiUrlRefreshToken}`, {} , {withCredentials: true})
+  refreshToken(): Observable<any> {
+    return this._httpClient.post<any>(`${this.apiUrlRefreshToken}`, {}, {withCredentials: true})
       .pipe(
         tap(res => {
           console.log('Tokens refreshed successfully');
@@ -65,13 +95,13 @@ export class AuthService {
       );
   }
 
-  isLoggIn(): boolean{
+  isLoggIn(): boolean {
     const token = localStorage.getItem("token");
     return token != null;
   }
 
-  logout(): Observable<any>{
-    return this._httpClient.post<any>(`${environment.apiUrl}${this.logout_}` , {} ,{withCredentials: true})
+  logout(): Observable<any> {
+    return this._httpClient.post<any>(`${environment.apiUrl}${this.logout_}`, {}, {withCredentials: true})
       .pipe(
         tap(() => {
           //localStorage.removeItem("token")
