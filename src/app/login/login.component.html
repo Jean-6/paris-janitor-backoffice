@@ -18,7 +18,7 @@
               <label for="password" class="fw-bold">Mot de passe</label>
             </div>
             <div class="d-grid">
-              <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" [disabled]="this.authService.isLoading">Se connecter</button>
+              <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" [disabled]="myForm.invalid || this.authService.isLoading">Se connecter</button>
             </div>
             <hr class="my-4">
             <div class="d-grid mb-2 text-center">
