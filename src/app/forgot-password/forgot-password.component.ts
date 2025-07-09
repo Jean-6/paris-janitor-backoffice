@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PasswordHandlerService} from "../_services/password-handler.service";
-import {catchError, Subject, takeUntil} from "rxjs";
+import {catchError, finalize, Subject, takeUntil} from "rxjs";
 import {AlertService} from "../_services/alert.service";
 import {Router} from "@angular/router";
 
@@ -24,36 +24,38 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
-      email: ["", [Validators.required,Validators.email]],
+      email: ["", [Validators.required, Validators.email]],
     });
   }
 
   onSubmit() {
-    this.passwordHandler.isLoading=true;
-    this.passwordHandler.sendResetEmail(this.myForm.value.email)
+    this.passwordHandler.isLoading = true;
+    const email = this.myForm.value.email;
+    console.log("email : " + email);
+
+    this.passwordHandler.sendResetEmail(email)
       .pipe(
-        catchError((error)=>{
+        catchError((error) => {
           this.alert.error('Erreur lors de l\'envoi d\'email')
           console.error("Erreur envoi email")
           throw error
         }),
-        takeUntil(this.destroy$))
-      .subscribe({
-        next: (res:any) =>{
-          this.router.navigate(['/login']);
-          this.alert.success("Email envoyé")
-        },
-          error:(err:any)=>{
-          this.alert.error('Erreur lors de l\'envoi d\'email')
-            console.error(err);
-            this.passwordHandler.isLoading= false;
-          },
-        complete: ()=>{
-          this.passwordHandler.isLoading= false;
-        }
+        takeUntil(this.destroy$),
+        finalize(() => {
+          this.passwordHandler.isLoading = false;
+        })
+      ).subscribe({
+      next: (res: any) => {
+        this.router.navigate(['/login']);
+        this.alert.success("Email de reinitialisation envoyé")
+      },
+      error: (err) => {
+        this.alert.error('Erreur lors de l\'envoi d\'email')
+        console.error(err);
+        this.passwordHandler.isLoading = false;
       }
-    )
-  }
+    });
 
+  }
 
 }

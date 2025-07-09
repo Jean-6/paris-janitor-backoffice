@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../_services/auth.service";
 import {Router} from "@angular/router";
-import {catchError, map, Subject, takeUntil, throwError} from "rxjs";
+import {catchError, finalize, Subject, takeUntil, throwError} from "rxjs";
 import {AlertService} from "../_services/alert.service";
 import {RegisterRequest} from "../_dto/registerRequest";
 import {RegisterResponse} from "../_dto/registerResponse";
@@ -60,7 +60,10 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.alert.error('Une erreur est survenue')
         return throwError(() => error)
       }),
-      takeUntil(this.destroy$)
+      takeUntil(this.destroy$),
+      finalize(() => {
+        this.authService.isLoading = false;
+      })
     ).subscribe({
       next: (res) => {
         this.registerResponse = res;
@@ -72,11 +75,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login']);
         this.alert.error('Inscription échouée');
         console.error(`Erreur lors de l'inscription: `, err);
-      },
-      complete: () => {
-        this.authService.isLoading=false;
       }
-
     });
   }
 

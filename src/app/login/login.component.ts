@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {Router} from "@angular/router";
 import {AuthService} from "../_services/auth.service";
 import {LoginResponse} from "../_dto/loginResponse";
-import {catchError, Subject, takeUntil} from "rxjs";
+import {catchError, finalize, Subject, takeUntil} from "rxjs";
 import {AlertService} from "../_services/alert.service";
 import {LoginRequest} from "../_dto/loginRequest";
 import {SharedModule} from "../features/shared/shared.module";
@@ -45,22 +45,22 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.error(`Erreur de connexion: `,error);
         throw error;
       }),
-      takeUntil(this.destroy$) // Cancel observable during destroying component
+      takeUntil(this.destroy$), // Cancel observable during destroying component
+      finalize(()=>{
+        this.authService.isLoading = false;
+      })
     ).subscribe({
       next: (res:any) => {
         this.loginResponse = res;
         this.authService.setIsAuthenticated(true);
         this.router.navigate(['/dashboard']);
         this.alert.success('Connexion réussie');
+
       },
       error: (err:any) => {
-        this.authService.isLoading = true;
         this.router.navigate(['/login']);
         this.alert.error('Connexion échouée');
         console.error(`Erreur de connexion: `, err);
-      },
-      complete: () => {
-        this.authService.isLoading=false;
       }
     });
 
