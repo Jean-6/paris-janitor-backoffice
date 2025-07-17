@@ -1,27 +1,50 @@
-# ParisJanitorBackoffice
+# ParisJanitor Backoffice
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 📚 Table des matières
+1. [Présentation](#présentation)
+2. [Fonctionnalités principales](#fonctionnalités-principales)
+3. [Structure du projet](#structure-du-projet)
+4. [Installation](#)
+5. [Lancement de l'application](#)
+6. [Scripts disponibles](#)
+7. [Technologies utilisées](#technos)
+8. [Bonnes pratiques](#)
+9. [Screenshots (optionnel)](#)
+10. [Contribuer (si open source ou travail d'équipe)](#)
+11. [Licence](#)
 
-## Code scaffolding
+### Présentation
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Le **backoffice Angular** de l’application Paris Janitor centralise la gestion de l’ensemble de la plateforme de conciergerie. Il est destiné aux administrateurs et gestionnaires de PJ afin de suivre, valider et administrer les utilisateurs (clients-bailleurs, voyageurs, prestataires), les biens, les prestations, les réservations, les paiements et les statistiques globales.
+Cette interface est conçue pour offrir une vision d’ensemble de l’activité, permettre un contrôle précis des flux, et garantir un service fluide et sécurisé.
 
-## Build
+### Fonctionnalités principales
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 🎯 Gestion des clients-bailleurs
+- CRUD des comptes bailleurs
+- Validation des nouveaux biens proposés
+- Visualisation du calendrier d’occupation des biens
+- Suivi des paiements hors location
+- Accès aux documents (états des lieux, contrats)
+- Synthèse des revenus et dépenses par bien
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Structure du projet
 
-## Running end-to-end tests
+- SPA Angular (Single Page Application)
+- Découpage modulaire par profil utilisateur
+- Intégration d’un backend via API REST (Spring Boot)
+- Authentification JWT avec rôles
+- Responsive Design (PC, tablette, mobile)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Technologies utilisées
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Application Angular CLI (15.x+) - TypeScript
+- Appels vers les microservices (API REST avec RxJs)
+- Authentification JWT avec rôles (admin, gestionnaire)
+- Intégration de composants UI (PrimeNG, Bootstrap/CSS)
+- Responsive design (consultation tablette possible)
+- Modularisation par espaces fonctionnels
