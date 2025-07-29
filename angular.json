@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "paris-janitor-backoffice:build:production"
+              "buildTarget": "paris-janitor-backoffice:build:production"
             },
             "development": {
-              "browserTarget": "paris-janitor-backoffice:build:development"
+              "buildTarget": "paris-janitor-backoffice:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "paris-janitor-backoffice:build"
+            "buildTarget": "paris-janitor-backoffice:build"
           }
         },
         "test": {
