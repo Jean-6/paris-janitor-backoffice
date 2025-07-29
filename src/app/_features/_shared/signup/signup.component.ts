@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../_services/auth.service";
+import {AuthService} from "../../../_services/auth.service";
 import {Router} from "@angular/router";
 import {catchError, finalize, Subject, takeUntil, throwError} from "rxjs";
-import {AlertService} from "../_services/alert.service";
-import {RegisterRequest} from "../_dto/registerRequest";
-import {RegisterResponse} from "../_dto/registerResponse";
+import {AlertService} from "../../../_services/alert.service";
+import {RegisterRequest} from "../../../_dto/registerRequest";
+import {RegisterResponse} from "../../../_dto/registerResponse";
 
 @Component({
   selector: 'app-signup',

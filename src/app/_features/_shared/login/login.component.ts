@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthService} from "../_services/auth.service";
-import {LoginResponse} from "../_dto/loginResponse";
+import {AuthService} from "../../../_services/auth.service";
+import {LoginResponse} from "../../../_dto/loginResponse";
 import {catchError, finalize, Subject, takeUntil} from "rxjs";
-import {AlertService} from "../_services/alert.service";
-import {LoginRequest} from "../_dto/loginRequest";
-import {SharedModule} from "../features/shared/shared.module";
+import {AlertService} from "../../../_services/alert.service";
+import {LoginRequest} from "../../../_dto/loginRequest";
+//import {SharedModule} from "../features/shared/shared.module";
 import {CommonModule} from "@angular/common";
 
 @Component({

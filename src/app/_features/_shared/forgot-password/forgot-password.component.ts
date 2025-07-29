@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {PasswordHandlerService} from "../_services/password-handler.service";
+import {PasswordHandlerService} from "../../../_services/password-handler.service";
 import {catchError, finalize, Subject, takeUntil} from "rxjs";
-import {AlertService} from "../_services/alert.service";
+import {AlertService} from "../../../_services/alert.service";
 import {Router} from "@angular/router";
 
 @Component({

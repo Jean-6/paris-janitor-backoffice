@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PasswordHandlerService} from "../_services/password-handler.service";
-import {ResetPassRequest} from "../_dto/resetPassRequest";
+import {PasswordHandlerService} from "../../../_services/password-handler.service";
+import {ResetPassRequest} from "../../../_dto/resetPassRequest";
 import {catchError, finalize, Subject, takeUntil} from "rxjs";
-import {AlertService} from "../_services/alert.service";
+import {AlertService} from "../../../_services/alert.service";
 
 
 @Component({
